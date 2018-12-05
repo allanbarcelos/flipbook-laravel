@@ -1,40 +1,31 @@
 language: php
-
 php:
-  #- 5.6
-  #- 7.0
-  #- 7.1
-  - 7.2
-
+- 7.2
 before_script:
-  - phpenv config-rm xdebug.ini
-  - cp .env.travis .env
-  - composer self-update
-  - composer install --no-interaction
-  - php artisan key:generate
-  - php artisan migrate --seed
-  #- php artisan db:seed
-  #- rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
-  #- npm install --global gulp-cli
-  #- npm install
-  #- gulp --production
-
+- phpenv config-rm xdebug.ini
+- cp .env.travis .env
+- composer self-update
+- composer install --no-interaction
+- php artisan key:generate
+- php artisan migrate --seed
 before_install:
-  - mysql -u root -e 'DROP DATABASE IF EXISTS allanbarcelos;'
-  - mysql -u root -e 'CREATE DATABASE IF NOT EXISTS allanbarcelos;'
-  #- mysql -u root -e 'SHOW DATABASES;'
-
+- mysql -u root -e 'DROP DATABASE IF EXISTS travis;'
+- mysql -u root -e 'CREATE DATABASE IF NOT EXISTS travis;'
 script:
-  #- phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.xml
-  - phpunit
-
+- phpunit
 services:
-  - mysql
-
+- mysql
 cache:
   directories:
-    - node_modules
-    - vendor
-
+  - node_modules
+  - vendor
 env:
+  matrix:
   - TRAVIS_NODE_VERSION="4"
+  global:
+  - secure: b7a2GchujTHCCM12ek+zq+ExeyucZtCOX2lpyS9UqVCakENj1b7Xntq1lR5FvHeFyZDYJtjyofoinr82uj1mbpvWbYkg9nrXzfwyWkPRs/h0zNcINvukBSCqbx7mVQWwCKv4ufrKQTUG6TfjpXOmhan9/Df0sxtx4SgG1dKeg/VrjVPnZEusjbDGAhakV/AMYR2xF1Bw8IAEbEv9k/am6/o3x0HVJeQmd7xtctWYNiJ6AQvu+OxEjwrslFBmSgTVxvfmj9GxBCp1M494w7duqVcV0c++each6YFXC6oJ8C1XE7tApt1oHuKp8hzxirPrdSZYG2NpS6j1kMlpskSziHSaIC0anEjfZTcOzEQNqrxeOt8EBU0vG68Mc2OqCUXUpVDU3dVgbhEEUO2Wb7/IAFaQjqHX3nf0l+I2MucT5SMXggUAKCgENLbHKgDNN7HiNVIkkBThm0tiAG4w6ukv12u7t4Jodb42hJvNOFULC2Z5P9A6fOUC7Ck+OJWrjmU+Vf54Ts1p01jYrkVJDmr/YMLFwiTQGJ1ODMWtyM+YZFSa19qyVdwJrV+tuBmMTTaEphAY9WdG8Hh6vL2A6PsCpInhRb8E3XPywOy3edaBO1B+n76xjSmh2gdlhPneEedzgPVzcXmT7t7U7NenZIsWvJLf20UtWdutqb3SISCuEIk=
+  - secure: EE4pKjj+wrJ3BDpqAhtScSpN79tpWJQ7mShCA8ku7DXlLtdxUlEIpYzXPruM2t692fPfgEnRTHVdWlwKrq6Ycnrxa+IOObnqxA5qzIGvvWxsWB7Mvr0OJJKoYtQtj/gGRys0+sN1nb7syt7RDXiGdrMhhCtUfHb0a9Zv4t82jpZERdjjBhP3VAeYx2KAyfhmKzF3PMCI/5y1AaCzxOG7GXH6VsQbZ+UuE843UfqtWX3pT/TlXv75D33z8d8h3pD1TRVC7GV4rkfhmNuN4Wj4zYHXrj4xqE/rWDZOBWGTY9nVN6I2b3zYRhgcmWxSoByQXAgapBAfmoKEu4rsBiPl4ArqjYMOIJsIufxObOG6P1tn0iNB571vGek/zXK/WC7UrKgJd2ojogVgPEaCXewkMqRwURyp2etOnJpPPI7SQoX8yUNbSjRH45BotwilB5ZJ+tL3gcs4NVODEkRqk3bHlZrvW8VLSMSaf/jHJwrH9zo52NNW3aRfofy4VofhCS57gmxRl1vE+sOnQ66VQ/91Z+KfqdKWwDqNr0tZ1xM0bbXfrStBCLoUKRk1lw0Rrj2uoFxAOlbSmRX6u4N81Ges3MeVYAZ1HxCEYsbWmeDWjCWr3KHr97zVhhxg2Ga8XKyCmrx9EjZnJvtDwbPZDyJc2mOtw8loeFF162N85eaZ+fg=
+
+install:
+  - echo "MAIL_USERNAME=${MAIL_USERNAME}" >> .env
+  - echo "MAIL_PASSWORD=${MAIL_PASSWORD}" >> .env
