@@ -12,14 +12,6 @@ class SettingTableSeeder extends Seeder
   */
   public function run()
   {
-    $setting = new Setting([
-      [
-        "name" => "app.name",
-        "value" => "Laravel"
-      ]
-    ]);
-
-    $setting->save();
-
+    //
   }
 }
