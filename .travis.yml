@@ -36,18 +36,10 @@ env:
   - secure: GBVQO/67W/vneYe/Kw499p9haeVgre1b/I1ilK2pR8Tg4u4ljBIfyV/y449we45MsR3mEnoKsTHNnSmd0xVI9Vren7T+qYJweflZWAyesu12+EgRtI3v+mLqk4x/GN7+TIqJlHnYYYKJT0d2/soKPMqUPEb6tPBmGFvw5F1pkzB+93CM/fZ5yBpQiXSkRcth0dgUMakBOpu31BxGGBQSYV6R6dwtYBYxSYKsjmEVfdNoXw9Mp1AfyIoYDxKusW6hZKtrZ5cZnK61Fc7bBlYT8/nwcpc7DnJMprX3UfA/3L8Xa2NaYcb9XoOQCHbgP6kKV5ULAUu/GdQMKMkozDSl3eR6622n8+BxeSMNPnfN5lDDuF2mU4qP/GQY1FAinw5r20RHaCfxEaQGNHnC5zbl+fHgV1vKN1AZ71/6hu1ls4um3VCqxRw/HZPjo0g0ANzNuyuAl1nZkcMxsDAqVYoGb382+EphMF7UL0DXEuHGqRRkf51+PIIjvkLxY29RrXtnI+wc+LTIqLjy/TTEzX45AwoN5Rv05HO+bsvBvqWGX0J8ZpsGC6gyA1p+UfBe2c3Pbp6rcgCHCBw5TfEmV0COFy+RrmaA3lacV6ahQZomqPxIez3RmiW1gu7SMy6upz+VH+QC2HcYLBaETHB3w6OG3aAywmKa2YjWw/CMbh4dJfo=
   - secure: OtOnGqvHibMX+QSWDaTpJd/mBpoYfpHw5cskkSBe54wzFTuAy3DqYaxHE7DU17oGloAyoyVQGsShiOAIEkMARKKvh8fmsMcgIN4yi8djWd0mFjSZys2rFA1/lGCBNWgMG1KaZRAJYE6mS7ufRVRyXSrrwjq2fPFBIogptDZYA2Y7RxAjF3QEetf8Pajdux1vHa57cOeNYbwAbqEeI3q+8cQNhFXE1LMYUFQmI1D2WQfa3nrFogbsGA/WTIuQ+Y2xoLfdONKbXJo8GlJTQ3D3ME2cAvsvjPn0wGPPn+IdArXC9l/rDt5JT5FGn8xwdPmxA1N6qPfa7Bh8WsgyazLfTtN4QkuUqt+3DlEVgjAwfwiJyQDzKTqzyBcYymw1oxV/Sg8H4/Im55GNt1TDFaZziWNbnldQkN0lBWOXe527zX2lFcPvX6kFbHKFwAGCyH6a9abXEBhA82DR96x/0X0BG5i+OdhRf1ePMq5wKxh2t3ZDBqbwqXOioaZnvQz3Z1p9JmZtKVoBIXJ+B+On0nV8FCAUSYdhJ7BWDLgeMkj+/BzIyrxMBMWjwKkrvZ1z646lmYubscY0MBycaTtIER+oCWypNuf+JTwXw97U1tdCdsn5e8hEHMssuNuvRF3l/5a88Jldoljc7//SJ96LjCIx0bQo1Z7Hq83cr9J4ADRXxec=
   - secure: HjTquvx8VwjOUc+cb4xuSbpO1lgSvaOMFEusNDLwmI5OZPRAI77AVtirGQVyKYePWFs7nHflV0dzRiHLdu1gtA4W/Tv8Tru97G49yKqIyUUn8meHYmJcDLWge2l3PdzHItptkAz+dNM/qXlGXtL4eymgGUZ5/7W0upwDW0+r01fujnAYIe5inJy+fvTqOmXoJOk5zxCPMB8VWm9bg1HFEvvCu5jYIC/1KqRCoroJWjwTi8FP+1mmQyb+O9gPwrox6d2deGOH6M7xqqCLrJ10X0L5BaARVnVzBh3COIbPGsGgJrZPESPXMG0mOfuxyDBLPmPbasAtHwK8HHFU0QFcxl+/6KVs6v0uibKa3PQFQEQDLkLLiRZY+T1g4lNgMXp/UlhZcL1k4lvq0Oe9M58s9DLcpTa5ckdP7yvzabGT2ObErfbSqIsyB+5cixenIIC2F0wwgAjJ3fHOLD5G15R8ThHA2vljSbrOUmuHQpKBDrizXIgDc9aaWHqnOWhBV6nCXuRttwKagnDT8cigFkA8hJTd6o7YXk6Pl9UnB0CLXpe274K54TRdbM8n39ctQbhk96L+ty+ZAiurOlfAGOGXgaY9Z67/0E+JlJ7OINSq9ohuvqhu8LBnKOIs+x3wPsBMgw9NwUfHT1GUKvkSwWr27ZLm6LZIFmFJJLosjgygFsU=
+  - secure: MBaI74GlkT927i/5PWRcoPjk8ZDq56072CaJIeG13NjwHT8dFlFMwQsJ6xZaNxXbDXgvodglyu9Hu0FG5V1YOBXktl0dtu5niOyYgOI+NFwlQHYhYS5kKY+Lai8qFuzzVUgjtA3emLiZo8iXbh+XuFqvInD16fUx0fKLWcWTKwHdb6djJuZWuWhIpFqArTbcRDZeFzN6/tBP9breNsenCpX14lZeSIt1GwRoqOIDNZfXvPK5xBygsHDV71vrSH/4z+IxBKbN9A4Zz+mahVbeCPO0JBeOymepg/0qflVHUacTL8saIDx3OC4CoUUnh7m1J7AcG63SaiqtFBbE1Sf5RO6rfT7e3Abwe2qcoawfyRdsIqxAHQr0sqfU6eGKqwuvXA7O8s5C5tY1y8su6BAAcIz6Z9fs5TF3ooJbLGI6NTbczRUMWoo0O0vvFVvAmE77xYrqzMDNET0yBaAEXURBrCKF9+gKb5x7EEt0I0QF0a4Hh5CLw5p/gmMNB1RxpxupOtvC2L71oT8Xaf7klLuo3tk+uTe1bP98H654f/kXEhJaEc7IwIWCFEQ/oRTHg5xDhn+9MNMUVDJ5Me1//Sifdg6JLu0DUi2GdrQO5RSHXMumLVg0qlf1dz4VML4y6P05QhKp+DNM0tHLFlZkJm8uqNQAcD4CneFD+HVf1zZlTTc=
 install:
 - echo "MAIL_USERNAME=${MAIL_USERNAME}" >> .env
 - echo "MAIL_PASSWORD=${MAIL_PASSWORD}" >> .env
-- echo "  DB_HOST:${DB_HOST}" >> .ebextensions/02-environment-db.config
-- echo "  DB_DATABASE:${DB_DATABASE}" >> .ebextensions/02-environment-db.config
-- echo "  DB_USERNAME:${DB_USERNAME}" >> .ebextensions/02-environment-db.config
-- echo "  DB_PASSWORD:${DB_PASSWORD}" >> .ebextensions/02-environment-db.config
-- echo "  MAIL_HOST:${MAIL_HOST}" >> .ebextensions/03-environment-mail.config
-- echo "  MAIL_PORT:${MAIL_PORT}" >> .ebextensions/03-environment-mail.config
-- echo "  MAIL_USERNAME:${MAIL_USERNAME}" >> .ebextensions/03-environment-mail.config
-- echo "  MAIL_PASSWORD:${MAIL_PASSWORD}" >> .ebextensions/03-environment-mail.config
-
 deploy:
   provider: elasticbeanstalk
   access_key_id:
@@ -57,4 +49,17 @@ deploy:
   region: us-east-2
   app: FlipBook
   env: flipbook-dev-env
-  bucket_name: elasticbeanstalk-us-east-2-006536376604
+  bucket_name: ${BUCKET_NAME}
+  script:
+  - env DB_CONNECTION:mysql
+  - env DB_PORT:3306
+  - env DB_HOST:${DB_HOST}
+  - env DB_DATABASE:${DB_DATABASE}
+  - env DB_USERNAME:${DB_USERNAME}
+  - env DB_PASSWORD:${DB_PASSWORD}
+  - env MAIL_DRIVER:smtp
+  - env MAIL_ENCRYPTION:null
+  - env MAIL_HOST:${MAIL_HOST}
+  - env MAIL_PORT:${MAIL_PORT}
+  - env MAIL_USERNAME:${MAIL_USERNAME}
+  - env MAIL_PASSWORD:${MAIL_PASSWORD}
