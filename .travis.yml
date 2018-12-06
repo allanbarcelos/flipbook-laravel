@@ -32,12 +32,6 @@ install:
 - echo "MAIL_USERNAME=${MAIL_USERNAME}" >> .env
 - echo "MAIL_PASSWORD=${MAIL_PASSWORD}" >> .env
 
-before_deploy:
-- rm .env
-- rm .env.travis
-- rm .env.example
-- touch .env
-
 deploy:
   provider: elasticbeanstalk
   access_key_id:
@@ -48,5 +42,3 @@ deploy:
   app: "FlipBook"
   env: "flipbook-dev-env"
   bucket_name: "elasticbeanstalk-us-east-2-006536376604"
-  after_deploy:
-  - ./after_deploy.sh
