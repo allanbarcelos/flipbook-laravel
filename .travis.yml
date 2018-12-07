@@ -51,15 +51,15 @@ deploy:
   env: flipbook-dev-env
   bucket_name: ${BUCKET_NAME}
   script:
-  - env DB_CONNECTION:mysql
-  - env DB_PORT:3306
-  - env DB_HOST:${DB_HOST}
-  - env DB_DATABASE:${DB_DATABASE}
-  - env DB_USERNAME:${DB_USERNAME}
-  - env DB_PASSWORD:${DB_PASSWORD}
-  - env MAIL_DRIVER:smtp
-  - env MAIL_ENCRYPTION:null
-  - env MAIL_HOST:${MAIL_HOST}
-  - env MAIL_PORT:${MAIL_PORT}
-  - env MAIL_USERNAME:${MAIL_USERNAME}
-  - env MAIL_PASSWORD:${MAIL_PASSWORD}
+  - eb env DB_CONNECTION:mysql
+  - eb env DB_PORT:3306
+  - eb env DB_HOST:${DB_HOST}
+  - eb env DB_DATABASE:${DB_DATABASE}
+  - eb env DB_USERNAME:${DB_USERNAME}
+  - eb env DB_PASSWORD:${DB_PASSWORD}
+  - eb env MAIL_DRIVER:smtp
+  - eb env MAIL_ENCRYPTION:null
+  - eb env MAIL_HOST:${MAIL_HOST}
+  - eb env MAIL_PORT:${MAIL_PORT}
+  - eb env MAIL_USERNAME:${MAIL_USERNAME}
+  - eb env MAIL_PASSWORD:${MAIL_PASSWORD}
