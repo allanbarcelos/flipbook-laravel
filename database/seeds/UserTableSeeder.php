@@ -14,10 +14,17 @@ class UserTableSeeder extends Seeder
   public function run()
   {
 
-    //$users = factory(User::class, 10000)->create();
+    //$users = factory(User::class, 50)->create()->roles()->attach($role_client);
 
-    $role_employee = Role::where('name', 'client')->first();
-    $role_manager  = Role::where('name', 'administrator')->first();
+    $role_client = Role::where('name', 'client')->first();
+    $role_admin  = Role::where('name', 'administrator')->first();
+
+    $users = factory(User::class, 50)->create()->each(function($u) {
+        //$u->posts()->save(factory(App\Post::class)->make());
+        $role_client = Role::where('name', 'client')->first();
+        $u->roles()->attach($role_client);
+    });
+
 
     if(!DB::table('users')->where('email', 'jeff@mail.com')->first())
     {
@@ -26,7 +33,7 @@ class UserTableSeeder extends Seeder
       $employee->email = 'jeff@mail.com';
       $employee->password = bcrypt('jeff123456');
       $employee->save();
-      $employee->roles()->attach($role_employee);
+      $employee->roles()->attach($role_client);
     }
 
     if(!DB::table('users')->where('email', 'admin@mail.com')->first())
@@ -36,7 +43,7 @@ class UserTableSeeder extends Seeder
       $manager->email = 'admin@mail.com';
       $manager->password = bcrypt('admin123456');
       $manager->save();
-      $manager->roles()->attach($role_manager);
+      $manager->roles()->attach($role_admin);
     }
   }
 }

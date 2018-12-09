@@ -2,16 +2,27 @@
 
 // Home
 
-Breadcrumbs::for('home', function ($trail) {
-    $trail->push('Home', route('home'));
+Breadcrumbs::for('homeIndex', function ($trail) {
+    $trail->push('Home', route('homeIndex'));
 });
 
-
-// Home > About
-Breadcrumbs::for('listClients', function ($trail) {
-    $trail->parent('home');
-    $trail->push('Clients', route('listClients'));
+// Home > Admin > Clients
+Breadcrumbs::for('clientsList', function ($trail) {
+    $trail->parent('adminIndex');
+    $trail->push('Clients', route('clientsList'));
 });
+
+// Home > Admin > Clients > Create
+Breadcrumbs::for('clientsCreate', function ($trail) {
+    $trail->parent('clientsList');
+    $trail->push('Create', route('clientsCreate'));
+});
+
+Breadcrumbs::for('adminIndex', function ($trail) {
+    $trail->parent('homeIndex');
+    $trail->push('Admin', route('adminIndex'));
+});
+
 /*
 // Home > Blog
 Breadcrumbs::for('blog', function ($trail) {

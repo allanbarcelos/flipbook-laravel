@@ -16,7 +16,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 */
+
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('/list/clients', 'HomeController@listClients')->name('listClients');
+Route::get('/', 'HomeController@index')->name('homeIndex');
+Route::get('/newspaper/{year}/{month}/{day}', 'HomeController@newspaperView')->name('newsView');
+
+Route::get('/admin', 'AdminController@index')->name('adminIndex');
+
+Route::get('/admin/clients/list', 'ClientsController@list')->name('clientsList');
+Route::get('/admin/clients/create', 'ClientsController@create')->name('clientsCreate');
+
+Route::get('/admin/client/{id}/view', 'ClientsController@view')->name('clientView');
+Route::post('/admin/clients/{id}/edit', 'ClientsController@edit')->name('cientEdit');
+Route::post('/admin/clients/delete', 'ClientsController@delete')->name('clientDelete');
