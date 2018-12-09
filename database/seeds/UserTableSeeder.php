@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\User;
 use App\Role;
+use App\Address;
 
 class UserTableSeeder extends Seeder
 {
@@ -23,12 +24,15 @@ class UserTableSeeder extends Seeder
         //$u->posts()->save(factory(App\Post::class)->make());
         $role_client = Role::where('name', 'client')->first();
         $u->roles()->attach($role_client);
+        //$u->cpf()->attach($faker->cpf);
     });
 
 
     if(!DB::table('users')->where('email', 'jeff@mail.com')->first())
     {
+
       $employee = new User();
+      $employee->cpf = '000.000.000-00';
       $employee->name = 'Jeff Barns';
       $employee->email = 'jeff@mail.com';
       $employee->password = bcrypt('jeff123456');
@@ -38,12 +42,15 @@ class UserTableSeeder extends Seeder
 
     if(!DB::table('users')->where('email', 'admin@mail.com')->first())
     {
+
       $manager = new User();
+      $manager->cpf = '000.000.000-01';
       $manager->name = 'Administrator';
       $manager->email = 'admin@mail.com';
       $manager->password = bcrypt('admin123456');
       $manager->save();
       $manager->roles()->attach($role_admin);
+
     }
   }
 }

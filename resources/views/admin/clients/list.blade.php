@@ -25,6 +25,24 @@
 <div class="row">&nbsp;</div>
 <div class="row">
   <div class="col-md-12">
+    <form class="" action="" method="post" id="searchForm">
+      @csrf
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search for..." name="search">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+          </span>
+        </div>
+        <p class="help-block">Buscar por nome, email, data de inclusão ou alteração.</p>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
     <table class="table table-bordered table-hover" id="users-table">
       <thead class="bg-secondary text-white">
         <tr>
@@ -95,10 +113,13 @@
 
 
 @section('styles')
+<link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css" rel="stylesheet">
 @stop
 
 @section('scripts')
+<script src="//cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js"></script>
 <script>
+
 var c = [];
 $(".dataRow").click(function () {
   $(this).toggleClass("bg-info text-light");
@@ -127,15 +148,15 @@ $(".dataRow").click(function () {
 
   if(c.length > 3)
   {
-    var info = "<div class=\"alert alert-danger position-fixed offset-md-1\">"
-              +"<i class=\"fa fa-info-circle\"></i> "
-              +"Não selecione mais que <strong>3</strong> "
-              +"clientes para exclusão</div>";
-
-    $("#info").html(info);
+    $.notifyDefaults({
+      type: 'danger',
+      allow_dismiss: true,
+      delay: 1000
+    });
+    $.notify("Não selecione mais que <strong>3</strong> clientes para exclusão");
   }
   else{
-    $("#info").html("");
+    //
   }
 
   if(c.length > 0 && c.length < 4){
@@ -170,29 +191,35 @@ $(document).ready(function() {
       cache    : false,
       success  : function(data) {
         $.each( formData, function( index, value ){
+          c.splice(c.indexOf(value),1);
           $("tr[data-id=\"" + value + "\"]").fadeOut(250).fadeIn(250, function(){ $(this).remove(); });
         });
-        var info = "<div class=\"alert alert-success position-fixed offset-md-1\">"
-                  +"<i class=\"fa fa-star\"></i> "
-                  +"Clientes excluidos com sucesso</div>";
-        $("#info").html(info);
+
+        $.notifyDefaults({
+          type: 'success',
+          allow_dismiss: true,
+        });
+        $.notify("Clientes excluidos com sucesso");
 
       },
       error: function()
       {
         $.each( formData, function( index, value ){
           $("tr[data-id=\"" + value + "\"]").fadeOut(250).fadeIn(250, function(){
-
-            var info = "<div class=\"alert alert-danger position-fixed offset-md-1\">"
-                      +"<i class=\"fa fa-info-circle\"></i> "
-                      +"Ocorreu uma falha na exclusão, tente novamente.</div>";
-
-            $("#info").html(info);
+            $.notifyDefaults({
+              type: 'danger',
+              allow_dismiss: true,
+            });
+            $.notify("Ocorreu uma falha na exclusão, tente novamente.");
           });
         });
       }
     })
   });
 });
+
+
+
+
 </script>
 @stop

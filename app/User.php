@@ -33,6 +33,10 @@ class User extends Authenticatable
     return $this->belongsToMany(Role::class);
   }
 
+  public function address()
+  {
+    return $this->hasOne(Address::class);
+  }
 
   /**
   * @param string|array $roles

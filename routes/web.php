@@ -24,9 +24,12 @@ Route::get('/newspaper/{year}/{month}/{day}', 'HomeController@newspaperView')->n
 
 Route::get('/admin', 'AdminController@index')->name('adminIndex');
 
-Route::get('/admin/clients/list', 'ClientsController@list')->name('clientsList');
-Route::get('/admin/clients/create', 'ClientsController@create')->name('clientsCreate');
+Route::any('/admin/clients/list', 'ClientsController@list')->name('clientsList');
+Route::any('/admin/clients/create', 'ClientsController@create')->name('clientsCreate');
 
 Route::get('/admin/client/{id}/view', 'ClientsController@view')->name('clientView');
 Route::get('/admin/clients/{id}/edit', 'ClientsController@edit')->name('cientEdit');
 Route::post('/admin/clients/delete', 'ClientsController@delete')->name('clientDelete');
+
+
+Route::get('/correios/{cep}', 'CorreiosController@index')->name('cepJson');
