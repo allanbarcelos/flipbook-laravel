@@ -127,7 +127,12 @@ $(".dataRow").click(function () {
 
   if(c.length > 3)
   {
-    $("#info").html("<div class=\"alert alert-danger position-fixed offset-md-1\"><i class=\"fa fa-info-circle\"></i> Não selecione mais que <strong>3</strong> clientes para exclusão</div>");
+    var info = "<div class=\"alert alert-danger position-fixed offset-md-1\">"
+              +"<i class=\"fa fa-info-circle\"></i> "
+              +"Não selecione mais que <strong>3</strong> "
+              +"clientes para exclusão</div>";
+
+    $("#info").html(info);
   }
   else{
     $("#info").html("");
@@ -145,16 +150,10 @@ $(".dataRow").click(function () {
   }
 });
 
-
-
 $(document).ready(function() {
-  // Ajax for our form
   $('form#formDeleteClients').on('submit', function(event){
     event.preventDefault();
     $("#deleteClientsModal").modal('toggle');
-
-
-
 
     var formData = [];
     $("input[name='idClient[]']").each(function() {
@@ -165,7 +164,6 @@ $(document).ready(function() {
 
     $.ajax({
       type     : "POST",
-      // url      : $(this).attr('action') + '/store',
       url      : $(this).attr('action'),
       data     : {_token: CSRF_TOKEN, 'idClient' : formData},
       dataType: 'JSON',
@@ -174,23 +172,26 @@ $(document).ready(function() {
         $.each( formData, function( index, value ){
           $("tr[data-id=\"" + value + "\"]").fadeOut(250).fadeIn(250, function(){ $(this).remove(); });
         });
-        
-        $("#info").html("<div class=\"alert alert-success position-fixed offset-md-1\"><i class=\"fa fa-star\"></i> Clientes excluidos com sucesso</div>");
+        var info = "<div class=\"alert alert-success position-fixed offset-md-1\">"
+                  +"<i class=\"fa fa-star\"></i> "
+                  +"Clientes excluidos com sucesso</div>";
+        $("#info").html(info);
 
       },
       error: function()
       {
         $.each( formData, function( index, value ){
           $("tr[data-id=\"" + value + "\"]").fadeOut(250).fadeIn(250, function(){
-            $("#info").html("<div class=\"alert alert-danger position-fixed offset-md-1\"><i class=\"fa fa-info-circle\"></i> Ocorreu uma falha na exclusão, tente novamente.</div>");
+
+            var info = "<div class=\"alert alert-danger position-fixed offset-md-1\">"
+                      +"<i class=\"fa fa-info-circle\"></i> "
+                      +"Ocorreu uma falha na exclusão, tente novamente.</div>";
+
+            $("#info").html(info);
           });
         });
       }
     })
-    console.log(formData);
-    //return false;
-    // alert($(this).attr('action'))
-    // alert('form is submited');
   });
 });
 </script>

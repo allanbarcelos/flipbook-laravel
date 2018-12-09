@@ -28,5 +28,5 @@ Route::get('/admin/clients/list', 'ClientsController@list')->name('clientsList')
 Route::get('/admin/clients/create', 'ClientsController@create')->name('clientsCreate');
 
 Route::get('/admin/client/{id}/view', 'ClientsController@view')->name('clientView');
-Route::post('/admin/clients/{id}/edit', 'ClientsController@edit')->name('cientEdit');
+Route::get('/admin/clients/{id}/edit', 'ClientsController@edit')->name('cientEdit');
 Route::post('/admin/clients/delete', 'ClientsController@delete')->name('clientDelete');
