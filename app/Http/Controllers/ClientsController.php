@@ -21,19 +21,19 @@ class ClientsController extends Controller
                     ->select('users.id','users.name','users.email','users.created_at','users.updated_at')
                     ->paginate(10);
 
-      return view('admin\clients\list', compact('users'));
+      return view('admin/clients/list', compact('users'));
   }
 
   public function edit(Request $request)
   {
-    return view('admin\clients\create');
+    return view('admin/clients/create');
   }
 
   public function create(Request $request)
   {
     $request->user()->authorizeRoles(['administrator']);
 
-    return view('admin\clients\create');
+    return view('admin/clients/create');
   }
 
   public function delete(Request $request)
