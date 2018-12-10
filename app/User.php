@@ -35,7 +35,7 @@ class User extends Authenticatable
 
   public function address()
   {
-    return $this->hasOne(Address::class);
+    return $this->hasOne('App\Address');
   }
 
   /**
@@ -81,6 +81,15 @@ class User extends Authenticatable
   {
 
     return null !== $this->roles()->where('name', $role)->first();
+
+  }
+
+
+  public function hasAddress($user_id)
+
+  {
+
+    return null !== $this->address()->where('user_id', $user_id)->first();
 
   }
 }

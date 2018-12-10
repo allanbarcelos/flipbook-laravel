@@ -166,6 +166,8 @@ $(".dataRow").click(function () {
   }
   if(c.length == 1){
     $("#editButton").removeClass("disabled");
+    $("#editButton").attr("href","/admin/clients/edit/" + c[0]);
+
   }else{
     $("#editButton").addClass("disabled");
   }

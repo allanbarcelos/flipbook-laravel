@@ -11,12 +11,17 @@
 
 <div class="row">
   <div class="col-md-12">
-    <form action="" method="POST">
+
+
+
+
+
+    {!! Form::open() !!}
       @csrf
       <div class="form-group row">
         <label class="col-md-1 control-label"  for="name">Nome</label>
         <div class="col-md-6">
-          <input type="text" class="form-control input-md" id="name" placeholder="">
+          <input type="text" class="form-control input-md" id="name" name="name" value="{{ $client->name }}" placeholder="">
         </div>
         <small class="text-muted"></small>
       </div>
@@ -24,7 +29,7 @@
       <div class="form-group row">
         <label class="col-md-1 control-label"  for="email">Email</label>
         <div class="col-md-6">
-          <input type="email" class="form-control input-md" id="email" placeholder="">
+          <input type="email" class="form-control input-md" id="email" name="email" placeholder="">
         </div>
         <small class="text-muted"></small>
       </div>
@@ -121,7 +126,7 @@
       </fieldset>
 
 
-    </form>
+  {!! Form::close() !!}
   </div>
 </div>
 

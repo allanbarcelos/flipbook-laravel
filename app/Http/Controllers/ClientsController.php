@@ -96,9 +96,11 @@ class ClientsController extends Controller
       return view('admin/clients/list', compact('users'));
     }
 
-    public function edit(Request $request)
+    public function edit($id)
     {
-      return view('admin/clients/create');
+      $client = User::findOrFail($id);
+    //  dd($client);
+      return view('admin/clients/form', ['client' => $client]);
     }
 
     public function create(Request $request)
@@ -126,7 +128,7 @@ class ClientsController extends Controller
 
       }
 
-      return view('admin/clients/create');
+      return view('admin/clients/form');
     }
 
 
