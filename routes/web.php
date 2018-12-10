@@ -27,9 +27,9 @@ Route::get('/admin', 'AdminController@index')->name('adminIndex');
 Route::any('/admin/clients/list', 'ClientsController@list')->name('clientsList');
 Route::any('/admin/clients/create', 'ClientsController@create')->name('clientsCreate');
 
-Route::get('/admin/client/{id}/view', 'ClientsController@view')->name('clientView');
+Route::get('/admin/client/view/{id}', 'ClientsController@view')->name('clientView');
 Route::get('/admin/clients/edit/{id}', 'ClientsController@edit')->name('cientEdit');
 Route::post('/admin/clients/delete', 'ClientsController@delete')->name('clientDelete');
 
-
-Route::get('/correios/{cep}', 'CorreiosController@index')->name('cepJson');
+Route::any('/files/upload', 'FilesController@index');
+Route::post('/files/store', 'FilesController@store')->name('store');

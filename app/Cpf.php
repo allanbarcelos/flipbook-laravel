@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Address extends Model
+class Cpf extends Model
 {
-    protected $table = 'address_user';
+    protected $table = 'cpf_user';
 
     public function user()
     {
