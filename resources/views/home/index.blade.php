@@ -2,58 +2,72 @@
 
 @section('content')
 {{ Breadcrumbs::render('homeIndex') }}
-<canvas id="the-canvas"></canvas>
+
+<div id="holder"></div>
+
 @endsection
 
 
 @section('scripts')
-  <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
-  <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+<script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+<script src="//cdn.jsdelivr.net/turn.js/3/turn.min.js"></script>
 
-  <script>
-
-  // If absolute URL from the remote server is provided, configure the CORS
-  // header on that server.
-  var url = '//elasticbeanstalk-us-east-2-006536376604.s3.us-east-2.amazonaws.com/646cd6aa0037255a2ce2381c954e7194_1544482087.pdf';
-
-  // Loaded via <script> tag, create shortcut to access PDF.js exports.
+<script type="text/javascript">
+function renderPDF(url, canvasContainer, options)
+{
+  var options = options || { scale: 1 };
   var pdfjsLib = window['pdfjs-dist/build/pdf'];
+  function renderPage(page)
+  {
+    var viewport = page.getViewport(options.scale);
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    var renderContext = {
+      canvasContext: ctx,
+      viewport: viewport
+    };
 
-  // The workerSrc property shall be specified.
-  pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+    canvasContainer.appendChild(canvas);
 
-  // Asynchronous download of PDF
-  var loadingTask = pdfjsLib.getDocument(url);
-  loadingTask.promise.then(function(pdf) {
-    console.log('PDF loaded');
+    page.render(renderContext);
+  }
 
-    // Fetch the first page
-    var pageNumber = 1;
-    pdf.getPage(pageNumber).then(function(page) {
-      console.log('Page loaded');
+  function renderPages(pdfDoc)
+  {
+    for(var num = 1; num <= pdfDoc.numPages; num++)
+    pdfDoc.getPage(num).then(renderPage);
+  }
+  pdfjsLib.disableWorker = true;
+  pdfjsLib.getDocument(url).then(renderPages);
+}
+</script>
 
-      var scale = 1.5;
-      var viewport = page.getViewport(scale);
+<script type="text/javascript">
+renderPDF('/curriculo.pdf', document.getElementById('holder'));
 
-      // Prepare canvas using PDF page dimensions
-      var canvas = document.getElementById('the-canvas');
-      var context = canvas.getContext('2d');
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
 
-      // Render PDF page into canvas context
-      var renderContext = {
-        canvasContext: context,
-        viewport: viewport
-      };
-      var renderTask = page.render(renderContext);
-      renderTask.then(function () {
-        console.log('Page rendered');
-      });
-    });
-  }, function (reason) {
-    // PDF loading error
-    console.error(reason);
+
+$(window).ready(function() {
+  $('#holder').turn({
+    display: 'double',
+    acceleration: true,
+    gradients: !$.isTouch,
+    elevation:50,
+    when: {
+      turned: function(e, page) {
+        console.log('Current view: ', $(this).turn('view'));
+      }
+    }
   });
-  </script>
+});
+
+$(window).bind('keydown', function(e){
+  if (e.keyCode==37)
+  $('#holder').turn('previous');
+  else if (e.keyCode==39)
+  $('#holder').turn('next');
+});
+</script>
 @endsection
