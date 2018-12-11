@@ -9,6 +9,6 @@ class File extends Model
     protected $table = 'files';
 
     protected $fillable = [
-        'path', 'title', 'descriptioon',
+        'path', 'title', 'description','editionDate'
     ];
 }

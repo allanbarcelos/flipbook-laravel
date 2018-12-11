@@ -23,6 +23,11 @@ Breadcrumbs::for('adminIndex', function ($trail) {
     $trail->push('Admin', route('adminIndex'));
 });
 
+Breadcrumbs::for('filesUpload', function ($trail) {
+    $trail->parent('adminIndex');
+    $trail->push('Upload', route('filesUpload'));
+});
+
 /*
 // Home > Blog
 Breadcrumbs::for('blog', function ($trail) {

@@ -35,7 +35,17 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->mapApiRoutes();
+        $this->mapApiRoutes(
+
+          /*Route::group([
+                  'middleware' => ['api', 'cors'],
+                  'namespace' => $this->namespace,
+                  'prefix' => 'api',
+              ], function ($router) {
+                   //Add you routes here, for example:
+                   Route::apiResource('/','HomeController');
+              })*/
+        );
 
         $this->mapWebRoutes();
 

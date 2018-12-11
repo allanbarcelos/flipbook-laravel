@@ -31,5 +31,5 @@ Route::get('/admin/client/view/{id}', 'ClientsController@view')->name('clientVie
 Route::get('/admin/clients/edit/{id}', 'ClientsController@edit')->name('cientEdit');
 Route::post('/admin/clients/delete', 'ClientsController@delete')->name('clientDelete');
 
-Route::any('/files/upload', 'FilesController@index');
+Route::any('/files/upload', 'FilesController@index')->name('filesUpload');
 Route::post('/files/store', 'FilesController@store')->name('store');
