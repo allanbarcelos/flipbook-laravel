@@ -20,7 +20,6 @@
   <link href="{{ asset('css/flipbook.css') }}" rel="stylesheet">
 
   @yield('styles')
-
 </head>
 <body>
   <div id="app">

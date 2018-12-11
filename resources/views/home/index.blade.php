@@ -3,7 +3,11 @@
 @section('content')
 {{ Breadcrumbs::render('homeIndex') }}
 
-<div id="holder"></div>
+<div id="the-canvas">
+
+
+
+</div>
 
 @endsection
 
@@ -13,61 +17,89 @@
 <script src="//cdn.jsdelivr.net/turn.js/3/turn.min.js"></script>
 
 <script type="text/javascript">
-function renderPDF(url, canvasContainer, options)
-{
-  var options = options || { scale: 1 };
-  var pdfjsLib = window['pdfjs-dist/build/pdf'];
-  function renderPage(page)
-  {
-    var viewport = page.getViewport(options.scale);
-    var canvas = document.createElement('canvas');
-    var ctx = canvas.getContext('2d');
-    var renderContext = {
-      canvasContext: ctx,
-      viewport: viewport
-    };
 
-    canvas.height = viewport.height;
-    canvas.width = viewport.width;
-    canvasContainer.appendChild(canvas);
+$(function(){
 
-    page.render(renderContext);
-  }
+    var options = options || { scale: 1 };
+    var pdfjsLib = window['pdfjs-dist/build/pdf'];
 
-  function renderPages(pdfDoc)
-  {
-    for(var num = 1; num <= pdfDoc.numPages; num++)
-    pdfDoc.getPage(num).then(renderPage);
-  }
-  pdfjsLib.disableWorker = true;
-  pdfjsLib.getDocument(url).then(renderPages);
-}
+    function renderPage(page)
+    {
+        var viewport = page.getViewport(options.scale);
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        var renderContext = {
+            canvasContext: ctx,
+            viewport: viewport
+        };
+
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        $('#the-canvas').append(canvas);
+
+        page.render(renderContext);
+        //$("#the-canvas > canvas:nth-child(1)").hide();
+    }
+
+    function renderPages(pdfDoc)
+    {
+        var arr = [];
+
+        for(var num = 1; num <= pdfDoc.numPages; num++)
+            arr[num] = pdfDoc.getPage(num).then(renderPage);
+
+        Promise.all(arr)
+        .then(
+            function () {
+                $('#the-canvas').turn({
+                    display: 'double',
+                    acceleration: true,
+                    gradients: !$.isTouch,
+                    elevation:50,
+                    height:$("#the-canvas > canvas").height(),
+                    when: {
+                        turned: function(e, page) {
+                            console.log('Current view: ', $(this).turn('view'));
+                        }
+                    }
+                });
+            }
+        );
+    }
+
+
+    pdfjsLib.disableWorker = true;
+    pdfjsLib.getDocument('/curriculo.pdf').then(renderPages);
+
+});
+
 </script>
 
 <script type="text/javascript">
-renderPDF('/curriculo.pdf', document.getElementById('holder'));
+console.log("ok");
 
 
-
-$(window).ready(function() {
-  $('#holder').turn({
-    display: 'double',
-    acceleration: true,
-    gradients: !$.isTouch,
-    elevation:50,
-    when: {
-      turned: function(e, page) {
-        console.log('Current view: ', $(this).turn('view'));
-      }
-    }
-  });
+/*
+$(window).ready(function () {
+$('#the-canvas').turn({
+display: 'double',
+acceleration: true,
+gradients: !$.isTouch,
+elevation:50,
+width: 400,
+height: 300,
+when: {
+turned: function(e, page) {
+console.log('Current view: ', $(this).turn('view'));
+}
+}
 });
-
+})
 $(window).bind('keydown', function(e){
-  if (e.keyCode==37)
-  $('#holder').turn('previous');
-  else if (e.keyCode==39)
-  $('#holder').turn('next');
-});
+if (e.keyCode==37)
+$('#the-canvas').turn('previous');
+else if (e.keyCode==39)
+$('#the-canvas').turn('next');
+});*/
 </script>
 @endsection
