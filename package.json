@@ -18,5 +18,11 @@
         "lodash": "^4.17.5",
         "popper.js": "^1.12",
         "vue": "^2.5.17"
-    }
+    },
+    "name": "flipbook-laravel",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "git@github.com:allanbarcelos/flipbook-laravel.git",
+    "author": "Allan Barcelos <allanbarcelosmg@gmail.com>",
+    "license": "MIT"
 }
