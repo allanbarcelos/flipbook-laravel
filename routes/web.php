@@ -19,17 +19,21 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('homeIndex');
-Route::get('/newspaper/{year}/{month}/{day}', 'HomeController@newspaperView')->name('newsView');
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/newspaper/read/{year}/{month}/{day}', 'ReaderController@index')->name('news_read');
+Route::get('/newspaper/search', 'ContentController@search')->name('news_search');
 
-Route::get('/admin', 'AdminController@index')->name('adminIndex');
 
-Route::any('/admin/clients/list', 'ClientsController@list')->name('clientsList');
-Route::any('/admin/clients/create', 'ClientsController@create')->name('clientsCreate');
+Route::get('/admin', 'UserController@index')->name('admin_index');
 
-Route::get('/admin/client/view/{id}', 'ClientsController@view')->name('clientView');
-Route::get('/admin/clients/edit/{id}', 'ClientsController@edit')->name('cientEdit');
-Route::post('/admin/clients/delete', 'ClientsController@delete')->name('clientDelete');
+Route::any('/admin/users', 'UserController@list')->name('users');
 
-Route::any('/files/upload', 'FilesController@index')->name('filesUpload');
-Route::post('/files/store', 'FilesController@store')->name('store');
+Route::any('/admin/clients', 'ClientsController@list')->name('clients');
+Route::any('/admin/clients/create', 'ClientsController@create')->name('clients_create');
+Route::get('/admin/client/view', 'ClientsController@view')->name('client_view');
+Route::get('/admin/clients/edit', 'ClientsController@edit')->name('cient_edit');
+Route::post('/admin/clients/delete', 'ClientsController@delete')->name('client_delete');
+
+Route::any('/admin/content', 'FilesController@index')->name('content');
+Route::post('/admin/content/store', 'FilesController@store')->name('content_store');
+Route::post('/admin/content/delete', 'FilesController@store')->name('content_delete');

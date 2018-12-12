@@ -17,7 +17,7 @@ class FilesController extends Controller
 
   public function index()
   {
-    return view('files/upload');
+    return view('files/index');
   }
 
   public function store(Request $request)
