@@ -19,86 +19,84 @@ class UsersController extends Controller
       return view('users/index');
     }
 
-    public function list(Request $request)
+    // POST
+    public function search(Request $request)
     {
 
-      $request->user()->authorizeRoles(['administrator']);
-
       $post = $request->post();
+      $explodeSpaces = explode(" ", $post['search']);
 
-      if(!$post || !isset($post['search']))
+      $where = [];
+      $email = [];
+      $i = 0;
+
+      foreach ($explodeSpaces as $key)
       {
-        $users = User::join('role_user','users.id', '=', 'role_user.user_id')
-        ->join('roles','role_user.role_id','=','roles.id')
-        ->select('users.id','roles.name AS rolename','users.name','users.email','users.created_at','users.updated_at')
-        ->paginate(10);
-      }else
-      {
-        $explodeSpaces = explode(" ", $post['search']);
+        if(filter_var($key, FILTER_VALIDATE_EMAIL))
+        {
+          $email = ['users.email','=',$key];
+          array_push($where,$email);
+          unset($explodeSpaces[$i]);
 
+        }
+        $i++;
+      }
 
-        $where = [];
-        $email = [];
+      $dateRegex = "#^(0[1-9]|[12][0-9]|3[01])[// /.](0[1-9]|1[012])[// /.](19|20)\d\d$#";
+        $date = [];
         $i = 0;
-
+        $j = 0;
         foreach ($explodeSpaces as $key)
         {
-          if(filter_var($key, FILTER_VALIDATE_EMAIL))
+          if(preg_match($dateRegex,$key))
           {
-            $email = ['users.email','=',$key];
-            array_push($where,$email);
-            unset($explodeSpaces[$i]);
-
+            $date[$i] = $key;
+            unset($explodeSpaces[$j]);
+            $i++;
           }
-          $i++;
+          $j++;
         }
 
-        $dateRegex = "#^(0[1-9]|[12][0-9]|3[01])[// /.](0[1-9]|1[012])[// /.](19|20)\d\d$#";
-          $date = [];
-          $i = 0;
-          $j = 0;
-          foreach ($explodeSpaces as $key)
+        $whereBetween = [Carbon::createFromTimestamp(-1)->toDateTimeString(),Carbon::now()];
+
+        if(!empty($date))
+        {
+          if(count($date) > 1)
           {
-            if(preg_match($dateRegex,$key))
-            {
-              $date[$i] = $key;
-              unset($explodeSpaces[$j]);
-              $i++;
-            }
-            $j++;
-          }
-
-          $whereBetween = [Carbon::createFromTimestamp(-1)->toDateTimeString(),Carbon::now()];
-
-          if(!empty($date))
+            $d1 = explode("/",$date[0]);
+            $d2 = explode("/",$date[1]);
+            $whereBetween = [$d1[2] . "-" . $d1[1] . "-" . $d1[0] . " 23:59:59", $d2[2] . "-" . $d2[1] . "-" . $d2[0] . " 23:59:59"];
+          }else
           {
-            if(count($date) > 1)
-            {
-              $d1 = explode("/",$date[0]);
-              $d2 = explode("/",$date[1]);
-              $whereBetween = [$d1[2] . "-" . $d1[1] . "-" . $d1[0] . " 23:59:59", $d2[2] . "-" . $d2[1] . "-" . $d2[0] . " 23:59:59"];
-            }else
-            {
-              $d1 = explode("/",$date[0]);
-              array_push($where, ['users.created_at', "like" , "%" . $d1[2] . "-" . $d1[1] . "-" . $d1[0] . "%"]);
-            }
+            $d1 = explode("/",$date[0]);
+            array_push($where, ['users.created_at', "like" , "%" . $d1[2] . "-" . $d1[1] . "-" . $d1[0] . "%"]);
           }
-
-          if(!empty($explodeSpaces)){
-            array_push($where, ['users.name','like','%' . implode(" ", $explodeSpaces) . '%']);
-          }
-
-          $users = User::join('role_user','users.id', '=', 'role_user.user_id')
-          ->join('roles','role_user.role_id','=','roles.id')
-          ->where($where)
-          ->whereBetween('users.created_at',$whereBetween)
-          ->select('users.id','roles.name AS rolename','users.name','users.email','users.created_at','users.updated_at')
-          ->paginate(10);
         }
+
+        if(!empty($explodeSpaces)){
+          array_push($where, ['users.name','like','%' . implode(" ", $explodeSpaces) . '%']);
+        }
+
+        $users = User::join('role_user','users.id', '=', 'role_user.user_id')
+        ->join('roles','role_user.role_id','=','roles.id')
+        ->where($where)
+        ->whereBetween('users.created_at',$whereBetween)
+        ->select('users.id','roles.name AS rolename','users.name','users.email','users.created_at','users.updated_at')
+        ->paginate(10);      
 
         return view('users.list', compact('users'));
+    }
 
+    public function list(Request $request)
+    {
+      $request->user()->authorizeRoles(['administrator']);
+      
+      $users = User::join('role_user','users.id', '=', 'role_user.user_id')
+                    ->join('roles','role_user.role_id','=','roles.id')
+                    ->select('users.id','roles.name AS rolename','users.name','users.email','users.created_at','users.updated_at')
+                    ->paginate(10);
 
+      return view('users.list', compact('users'));
     }
 
 

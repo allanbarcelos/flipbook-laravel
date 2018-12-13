@@ -1,14 +1,13 @@
 <?php
 
 // Home
-
 Breadcrumbs::for('home', function ($trail) {
     $trail->push('Home', route('home'));
 });
 
 Breadcrumbs::for('admin', function ($trail) {
     $trail->parent('home');
-    $trail->push('Admin', route('admin'));
+    $trail->push('Admin');
 });
 
 // Home > Admin > Clients
@@ -23,21 +22,24 @@ Breadcrumbs::for('clients_list', function ($trail) {
     $trail->push('List', route('clients_list'));
 });
 
-
 // Home > Admin > Clients > Create
 Breadcrumbs::for('clients_create', function ($trail) {
     $trail->parent('clients');
     $trail->push('Create', route('clients_create'));
 });
 
+// Home > Admin > Clients > Edit
+Breadcrumbs::for('client_edit', function ($trail) {
+    $trail->parent('clients');
+    $trail->push('Edit', route('client_edit'));
+});
 
-// Home > User
+
+// Home > User > USER_NAME
 Breadcrumbs::for('user', function ($trail) {
     $trail->parent('home');
     $trail->push(Auth::user()->name);
 });
-
-
 
 // Home > Admin > Users
 Breadcrumbs::for('users', function ($trail) {
@@ -51,9 +53,11 @@ Breadcrumbs::for('users_list', function ($trail) {
     $trail->push('List', route('users_list'));
 });
 
-
-
-
+// Home > Admin > Users > Edit
+Breadcrumbs::for('user_edit', function ($trail) {
+    $trail->parent('users');
+    $trail->push('Edit', route('user_edit'));
+});
 
 // Home > Admin > Content
 Breadcrumbs::for('content', function ($trail) {
@@ -67,22 +71,8 @@ Breadcrumbs::for('content_list', function ($trail) {
     $trail->push('List', route('content_list'));
 });
 
-/*
-// Home > Blog
-Breadcrumbs::for('blog', function ($trail) {
-    $trail->parent('home');
-    $trail->push('Blog', route('blog'));
+// Home > Admin > Content > Edit
+Breadcrumbs::for('content_edit', function ($trail) {
+    $trail->parent('content');
+    $trail->push('Edit', route('content_edit'));
 });
-
-// Home > Blog > [Category]
-Breadcrumbs::for('category', function ($trail, $category) {
-    $trail->parent('blog');
-    $trail->push($category->title, route('category', $category->id));
-});
-
-// Home > Blog > [Category] > [Post]
-Breadcrumbs::for('post', function ($trail, $post) {
-    $trail->parent('category', $post->category);
-    $trail->push($post->title, route('post', $post->id));
-});
-*/
