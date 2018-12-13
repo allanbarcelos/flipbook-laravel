@@ -14,10 +14,17 @@
   background: #e3342f;
   color: #fff;
 }
+.breadcrumb > li.breadcrumb-item:nth-child(n+2)::before
+{
+  content: ">"
+}
 
 .breadcrumb
 {
     border-radius: 0;
+    background: #fff;
+    margin: 5px 0 10px;
+    padding: 5px 0 10px;
 }
 
 nav.navbar.navbar-secondary

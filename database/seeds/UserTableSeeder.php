@@ -49,7 +49,7 @@ class UserTableSeeder extends Seeder
         {
             $addressuser = factory(App\Address::class);
             $manager = new User();
-            $manager->name = 'Administrator';
+            $manager->name = 'Administrator';            
             $manager->email = 'admin@mail.com';
             $manager->password = bcrypt('admin123456');
             $manager->save();

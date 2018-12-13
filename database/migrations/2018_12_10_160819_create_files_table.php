@@ -16,7 +16,7 @@ class CreateFilesTable extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
             $table->string('path')->unique();
-            $table->date('editionDate')->nullable();
+            $table->enum('type',['first_page','full']);
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ class User extends Authenticatable
     * @var array
     */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name', 'email', 'password',
     ];
 
     /**
@@ -74,7 +74,6 @@ class User extends Authenticatable
     {
         return null !== $this->phones()->whereIn('user_id', $user_id)->first();
     }
-
 
     /**
     * Check one role

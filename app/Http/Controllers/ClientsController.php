@@ -12,6 +12,7 @@ class ClientsController extends Controller
   {
     $this->middleware('auth');
   }
+
   public function list(Request $request)
   {
     $request->user()->authorizeRoles(['administrator']);
@@ -93,14 +94,14 @@ class ClientsController extends Controller
         ->paginate(10);
       }
 
-      return view('admin/clients/list', compact('users'));
+      return view('clients.list', compact('users'));
     }
 
     public function edit($id)
     {
       $client = User::findOrFail($id);
     //  dd($client);
-      return view('admin/clients/form', ['client' => $client]);
+      return view('clients.form', ['client' => $client]);
     }
 
     public function create(Request $request)
@@ -112,7 +113,7 @@ class ClientsController extends Controller
 
         if(User::where('cpf','=',$request->post()['cpf']))
         {
-          return view('admin/clients/create');
+          return view('clients.create');
         }
 
         $user = User::create([
@@ -122,13 +123,13 @@ class ClientsController extends Controller
         ]);
 
         $user->roles()
-        ->attach(Role::where('name', 'client')->first());
+             ->attach(Role::where('name', 'client')->first());
 
         return $user;
 
       }
 
-      return view('admin/clients/form');
+      return view('clients.form');
     }
 
 

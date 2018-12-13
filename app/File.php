@@ -9,6 +9,11 @@ class File extends Model
     protected $table = 'files';
 
     protected $fillable = [
-        'path', 'title', 'description','editionDate'
+        'path', 'type'
     ];
+
+    public function content()
+    {
+        return $this->belongsTo('App\Content');
+    }
 }

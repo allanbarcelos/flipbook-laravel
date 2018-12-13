@@ -59,7 +59,9 @@
             </div>
         </div>
     </div>
-    @if (  config('app.env') === 'developmet'
+
+    @if (config('app.env') === 'developmet'
+    || config('app.env') === 'dev'
     || config('app.env') === 'staging'
     || config('app.env') === 'local' )
     <div class="row">
