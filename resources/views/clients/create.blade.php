@@ -15,6 +15,14 @@
     {!! Form::open() !!}
     @csrf
     <div class="form-group row">
+      <label class="col-md-1 control-label"  for="name">Contrato</label>
+      <div class="col-md-3">
+        <input type="text" class="form-control input-md" id="contract" name="contract" placeholder="">
+      </div>
+      <small class="text-muted"></small>
+    </div>
+
+    <div class="form-group row">
       <label class="col-md-1 control-label"  for="name">Nome</label>
       <div class="col-md-6">
         <input type="text" class="form-control input-md" id="name" name="name" placeholder="">

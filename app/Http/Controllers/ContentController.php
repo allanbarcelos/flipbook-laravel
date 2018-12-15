@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 use Carbon\Carbon;
+use App\Events\ContentPdfFirstPageToJpegEvent;
 
 class ContentController extends Controller
 {
@@ -120,8 +121,8 @@ class ContentController extends Controller
 
           $request->request->add(['path' => $s3]);
 
-          $pdfToJPEG = new \Spatie\PdfToImage\Pdf($request->file('pdf_file'));
-          $pdfToJPEG->saveImage(storage_path());
+          //$pdfToJPEG = new \Spatie\PdfToImage\Pdf($request->file('pdf_file'));
+          //$pdfToJPEG->saveImage(storage_path('tmp/'));
 
           $content = new Content();
           $content->filename = $filenametostore;

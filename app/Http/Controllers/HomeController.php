@@ -32,6 +32,7 @@ class HomeController extends Controller
         {
 
         }
+
         $year = Carbon::now()->format('m');
         $month = Carbon::now()->format('Y');
 

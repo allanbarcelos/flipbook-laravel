@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Carbon\Carbon;
-
+use App\Events\UserCreated;
 class ClientsController extends Controller
 {
   public function __construct()
@@ -125,6 +125,8 @@ class ClientsController extends Controller
         $user->roles()
              ->attach(Role::where('name', 'client')->first());
 
+        //Fire the event
+        event(new UserCreated($user));
         return $user;
 
       }
