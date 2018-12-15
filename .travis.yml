@@ -2,7 +2,7 @@ language: php
 php:
 - 7.2
 before_script:
-- pecl install imagick
+- printf "\n" | pecl install imagick
 - phpenv config-rm xdebug.ini
 - cp .env.travis .env
 - composer self-update
