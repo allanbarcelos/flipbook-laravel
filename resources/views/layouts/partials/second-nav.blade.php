@@ -20,13 +20,13 @@
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false">
-            <span>Dropdown button</span>
+            <span>{{ \Carbon\Carbon::now()->format('M') }} {{ \Carbon\Carbon::now()->format('Y') }}</span>
             <i class="fa fa-chevron-down"></i>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
+
+            <a class="dropdown-item" href="#">{{ \Carbon\Carbon::now()->format('M') }} {{ \Carbon\Carbon::now()->format('Y') }}</a>
+
           </div>
         </div>
       </div>

@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Content;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
+
+use Carbon\Carbon;
+
 class ContentController extends Controller
 {
 
@@ -95,7 +97,8 @@ class ContentController extends Controller
           ->withInput();
         }
 
-        if($request->hasFile('pdf_file')) {
+        if($request->hasFile('pdf_file'))
+        {
 
           //get filename with extension
           $filenamewithextension = $request->file('pdf_file')->getClientOriginalName();
@@ -109,14 +112,28 @@ class ContentController extends Controller
           //filename to store
           $filenametostore = md5($filename . time()) . '_' . time() . '.' . $extension;
 
-          //Upload File to s3
 
-          if(Storage::disk('s3')->put($filenametostore, fopen($request->file('pdf_file'), 'r+'), 'public'))
+          $content = new Content();
+          $content->filename = $filenametostore;
+          $content->requestFile = $request->file('pdf_file');
+          $s3 = $content->storage();
+
+          $request->request->add(['path' => $s3]);
+
+          $pdfToJPEG = new \Spatie\PdfToImage\Pdf($request->file('pdf_file'));
+          $pdfToJPEG->saveImage(storage_path());
+
+          $content = new Content();
+          $content->filename = $filenametostore;
+          $content->requestFile = $request->file('pdf_file');
+          $s3 = $content->storage();
+
+
+          if(Content::create($request->post()))
           {
-            $request->request->add(['path' => Storage::disk('s3')->url($filenametostore)]);
-            Content::create($request->post());
             return back()->withInput();
           }
+
           //$url = Storage::disk('s3')->url('YOUR_FILENAME_HERE');
           //Store $filenametostore in the database
         }
@@ -128,6 +145,11 @@ class ContentController extends Controller
       }
 
       return view('content.create');
+    }
+
+
+    public function delete(){
+
     }
 
   }

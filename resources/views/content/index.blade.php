@@ -47,23 +47,23 @@
       <thead class="bg-secondary text-white">
         <tr>
           <th>Id</th>
-          <th>Titulo</th>
-          <th>Criado</th>
+          <th>Path</th>
+          <th>Data da edição</th>
           <th>&nbsp;</th>
         </tr>
       </thead>
 
       <tbody>
-        <?php /*
-        @foreach($users as $user)
-        <tr data-id="{{ $user->id }}" class="dataRow">
-          <td>{{ $user->id }}</td>
-          <td>{{ $user->title }}</td>
-          <td>{{ $user->created_at->format('d/m/Y') }}</td>
-          <td><a href="{{ $user->title }}">Ver</a></td>
+
+        @foreach($content as $cont)
+        <tr data-id="{{ $cont->id }}" class="dataRow">
+          <td>{{ $cont->id }}</td>
+          <td>{{ $cont->path }}</td>
+          <td>{{ date('d M Y', strtotime($cont->edition_date)) }}</td>
+          <td>{{ $cont->created_at->format('d/m/Y') }}</td>
         </tr>
         @endforeach
-        */ ?>
+
       </tbody>
     </table>
   </div>
