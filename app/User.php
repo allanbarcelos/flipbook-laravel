@@ -38,6 +38,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Address');
     }
 
+    public function contract()
+    {
+        return $this->hasOne('App\Contract');
+    }
+
     public function cpf()
     {
         return $this->hasOne('App\Cpf');
@@ -87,6 +92,11 @@ class User extends Authenticatable
     public function hasAddress($user_id)
     {
         return null !== $this->address()->where('user_id', $user_id)->first();
+    }
+
+    public function hasContract($user_id)
+    {
+        return null !== $this->contract()->where('user_id', $user_id)->first();
     }
 
     public function hasPhone($user_id)

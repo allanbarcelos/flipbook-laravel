@@ -167,8 +167,8 @@ return [
          */
 
         DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider::class,
-        Yajra\DataTables\DataTablesServiceProvider::class,
-        Cagartner\CorreiosConsulta\ServiceProvider::class,
+        //Yajra\DataTables\DataTablesServiceProvider::class,
+        //Cagartner\CorreiosConsulta\ServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         /*
          * Application Service Providers...
@@ -228,8 +228,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-        'Correios' => Cagartner\CorreiosConsulta\Facade::class,
+        //'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        //'Correios' => Cagartner\CorreiosConsulta\Facade::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
     ],

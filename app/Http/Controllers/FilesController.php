@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
 class FilesController extends Controller
 {
 

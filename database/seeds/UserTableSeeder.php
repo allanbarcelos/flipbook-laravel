@@ -26,6 +26,7 @@ class UserTableSeeder extends Seeder
             {
                 $u->phones()->save(factory(App\Phone::class)->make());
             }
+            $u->contract()->save(factory(App\Contract::class)->make());
         });
 
         if(!DB::table('users')->where('email', 'jeff@mail.com')->first())
@@ -43,13 +44,15 @@ class UserTableSeeder extends Seeder
             {
                 $employee->phones()->save(factory(App\Phone::class)->make());
             }
+
+            $employee->contract()->save(factory(App\Contract::class)->make());
         }
 
         if(!DB::table('users')->where('email', 'admin@mail.com')->first())
         {
             $addressuser = factory(App\Address::class);
             $manager = new User();
-            $manager->name = 'Administrator';            
+            $manager->name = 'Administrator';
             $manager->email = 'admin@mail.com';
             $manager->password = bcrypt('admin123456');
             $manager->save();

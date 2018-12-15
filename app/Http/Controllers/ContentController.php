@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Content;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 class ContentController extends Controller
 {
 
@@ -13,6 +15,17 @@ class ContentController extends Controller
     $this->middleware('auth');
   }
 
+  public function index(Request $request)
+  {
+
+    $request->user()->authorizeRoles(['administrator']);
+
+    $post = $request->post();
+
+    $content = Content::paginate(10);
+
+    return view('content.index', compact('content'));
+  }
 
 
   public function search()
@@ -62,19 +75,59 @@ class ContentController extends Controller
       ->select('contents.id','contents.title')
       ->paginate(10);
 
-      return view('content.list', compact('contents'));      
-  }
-  public function list(Request $request)
-  {
-
-    $request->user()->authorizeRoles(['administrator']);
-
-    $post = $request->post();
-
-      $contents = Content::join('content_file','contents.id', '=', 'content_file.content_id')
-      ->select('contents.id','contents.title')
-      ->paginate(10);
-
       return view('content.list', compact('contents'));
     }
+
+    public function create(Request $request)
+    {
+
+      if($request->isMethod('post')){
+
+        $validator = Validator::make($request->all(), [
+          'edition_date' => 'required',
+          'pdf_file' => 'required|mimes:pdf'
+        ]);
+
+        if ($validator->fails())
+        {
+          return back()->withInput()
+          ->withErrors($validator)
+          ->withInput();
+        }
+
+        if($request->hasFile('pdf_file')) {
+
+          //get filename with extension
+          $filenamewithextension = $request->file('pdf_file')->getClientOriginalName();
+
+          //get filename without extension
+          $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+
+          //get file extension
+          $extension = $request->file('pdf_file')->getClientOriginalExtension();
+
+          //filename to store
+          $filenametostore = md5($filename . time()) . '_' . time() . '.' . $extension;
+
+          //Upload File to s3
+
+          if(Storage::disk('s3')->put($filenametostore, fopen($request->file('pdf_file'), 'r+'), 'public'))
+          {
+            $request->request->add(['path' => Storage::disk('s3')->url($filenametostore)]);
+            Content::create($request->post());
+            return back()->withInput();
+          }
+          //$url = Storage::disk('s3')->url('YOUR_FILENAME_HERE');
+          //Store $filenametostore in the database
+        }
+
+
+        return back()->withInput()
+        ->withErrors()
+        ->withInput();
+      }
+
+      return view('content.create');
+    }
+
   }

@@ -20,19 +20,19 @@
 
         @if(Auth::user()->hasRole('administrator'))
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('clients_list')}}">
-            Clientes <i class="fas fa-user"></i>
+          <a class="nav-link" href="{{ route('clients')}}">
+            Clientes <i class="fas fa-handshake"></i>
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('content_list')}}">
+          <a class="nav-link" href="{{ route('content')}}">
             Conteudo <i class="fas fa-newspaper"></i>
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('users_list')}}">
+          <a class="nav-link" href="{{ route('users')}}">
             Usuários <i class="fas fa-users"></i>
           </a>
         </li>
@@ -40,7 +40,7 @@
 
         <li class="nav-item">
           <a class="nav-link" href="{{route('user')}}">
-            {{ Auth::user()->name }} <i class="fas fa-cog"></i>
+            {{ Auth::user()->name }} <i class="fas fa-user"></i>
           </a>
         </li>
         <li class="nav-item">

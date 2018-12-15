@@ -15,8 +15,9 @@ class CreateContentTable extends Migration
     {
         Schema::create('content', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->date('editionDate')->nullable();
+            $table->date('edition_date')->nullable();
+            $table->string('first_page');
+            $table->string('full');
             $table->timestamps();
         });
     }

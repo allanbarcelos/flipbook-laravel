@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-{{ Breadcrumbs::render('clients_create') }}
+{{ Breadcrumbs::render('client_create') }}
 
 <div class="page-header">
   <h3>Adicionar novo cliente</h3>
@@ -198,7 +198,7 @@ $(function() {
   $('.cpf').mask('000.000.000-00', cpf_options);
 
   $('.phone').mask('0000-0000');
-  
+
   var SPMaskBehavior = function (val) {
     return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
   },

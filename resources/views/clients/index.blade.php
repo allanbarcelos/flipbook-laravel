@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-{{ Breadcrumbs::render('users_list') }}
+{{ Breadcrumbs::render('clients') }}
 
 <div class="row">
   <div class="col-md-1">
-    <a href="{{route('users_create')}}" class="btn btn-primary" id="addButton">
+    <a href="{{route('client_create')}}" class="btn btn-primary" id="addButton">
       <i class="fa fa-edit"></i> Add
     </a>
   </div>
@@ -15,7 +15,7 @@
     </a>
   </div>
   <div class="col-md-1">
-    <a href="#" class="btn btn-danger disabled" id="removeButton" data-toggle="modal" data-target="#deleteClientsModal">
+    <a href="#" class="btn btn-danger disabled" id="removeButton" data-toggle="modal" data-target="#deleteModal">
       <i class="fa fa-trash-alt"></i> Remove
     </a>
   </div>
@@ -54,9 +54,8 @@
           <th>Id</th>
           <th>Name</th>
           <th>Email</th>
-          <th>Tipo</th>
-          <th>Criado</th>
-          <th>Atualizado</th>
+          <th>Created At</th>
+          <th>Updated At</th>
         </tr>
       </thead>
       <tbody>
@@ -65,7 +64,6 @@
           <td>{{ $user->id }}</td>
           <td>{{ $user->name }}</td>
           <td>{{ $user->email }}</td>
-          <td>{{ $user->rolename }}</td>
           <td>{{ $user->created_at->format('d/m/Y') }}</td>
           <td>{{ $user->updated_at->format('d/m/Y H:i:s') }}</td>
         </tr>
@@ -82,7 +80,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="deleteClientsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header danger">
@@ -108,7 +106,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <form action="{{route('client_delete')}}" method="POST" id="formDeleteClients">
+        <form action="{{route('clients_delete')}}" method="POST" id="formDelete">
           @csrf
           <button type="submit" class="btn btn-primary">Sim</button>
         </form>
@@ -125,110 +123,5 @@
 
 @section('scripts')
 <script src="//cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js"></script>
-<script>
-
-var c = [];
-$(".dataRow").click(function () {
-  $(this).toggleClass("bg-info text-light");
-
-  var dataId = $(this).attr('data-id');
-
-  if(c.includes(dataId))
-  {
-
-    c.splice(c.indexOf(dataId),1);
-    $("#deleteTableBody > tr[data-id=\""+dataId+"\"]").remove();
-    $("#formClientId"+dataId).remove();
-
-  }else{
-    c.push(dataId);
-    $(this).clone().appendTo("#deleteTableBody");
-    $("#deleteTableBody tr[data-id=\""+dataId+"\"]").removeClass("bg-info text-light");
-
-    $("#deleteTableBody tr[data-id=\""+dataId+"\"] td:nth-child(1)").remove();
-    $("#deleteTableBody tr[data-id=\""+dataId+"\"] td:nth-child(3)").remove();
-    $("#deleteTableBody tr[data-id=\""+dataId+"\"] td:nth-child(3)").remove();
-
-    $("#formDeleteClients").prepend("<input id=\"formClientId"+dataId+"\" type=\"hidden\" name=\"idClient[]\" value=\""+dataId+"\" />");
-
-  }
-
-  if(c.length > 3)
-  {
-    $.notifyDefaults({
-      type: 'danger',
-      allow_dismiss: true,
-      delay: 1000
-    });
-    $.notify("Não selecione mais que <strong>3</strong> clientes para exclusão");
-  }
-  else{
-    //
-  }
-
-  if(c.length > 0 && c.length < 4){
-    $("#removeButton").removeClass("disabled");
-  }else{
-    $("#removeButton").addClass("disabled");
-  }
-  if(c.length == 1){
-    $("#editButton").removeClass("disabled");
-    $("#editButton").attr("href","/admin/clients/edit/" + c[0]);
-
-  }else{
-    $("#editButton").addClass("disabled");
-  }
-});
-
-$(document).ready(function() {
-  $('form#formDeleteClients').on('submit', function(event){
-    event.preventDefault();
-    $("#deleteClientsModal").modal('toggle');
-
-    var formData = [];
-    $("input[name='idClient[]']").each(function() {
-      formData.push($(this).val());
-    });
-
-    var CSRF_TOKEN = $('input[name="_token"]').val();
-
-    $.ajax({
-      type     : "POST",
-      url      : $(this).attr('action'),
-      data     : {_token: CSRF_TOKEN, 'idClient' : formData},
-      dataType: 'JSON',
-      cache    : false,
-      success  : function(data) {
-        $.each( formData, function( index, value ){
-          c.splice(c.indexOf(value),1);
-          $("tr[data-id=\"" + value + "\"]").fadeOut(250).fadeIn(250, function(){ $(this).remove(); });
-        });
-
-        $.notifyDefaults({
-          type: 'success',
-          allow_dismiss: true,
-        });
-        $.notify("Clientes excluidos com sucesso");
-
-      },
-      error: function()
-      {
-        $.each( formData, function( index, value ){
-          $("tr[data-id=\"" + value + "\"]").fadeOut(250).fadeIn(250, function(){
-            $.notifyDefaults({
-              type: 'danger',
-              allow_dismiss: true,
-            });
-            $.notify("Ocorreu uma falha na exclusão, tente novamente.");
-          });
-        });
-      }
-    })
-  });
-});
-
-
-
-
-</script>
+<script type="text/javascript" src="{{asset('js/table-select-delete.js')}}"></script>
 @stop

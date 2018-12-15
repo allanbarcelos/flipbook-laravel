@@ -13,7 +13,7 @@ Breadcrumbs::for('admin', function ($trail) {
 // Home > Admin > Clients
 Breadcrumbs::for('clients', function ($trail) {
     $trail->parent('admin');
-    $trail->push('Clients');
+    $trail->push('Clients', route('clients'));
 });
 
 // Home > Admin > Clients > list
@@ -23,9 +23,9 @@ Breadcrumbs::for('clients_list', function ($trail) {
 });
 
 // Home > Admin > Clients > Create
-Breadcrumbs::for('clients_create', function ($trail) {
+Breadcrumbs::for('client_create', function ($trail) {
     $trail->parent('clients');
-    $trail->push('Create', route('clients_create'));
+    $trail->push('Create', route('client_create'));
 });
 
 // Home > Admin > Clients > Edit
@@ -44,13 +44,13 @@ Breadcrumbs::for('user', function ($trail) {
 // Home > Admin > Users
 Breadcrumbs::for('users', function ($trail) {
     $trail->parent('admin');
-    $trail->push('Users');
+    $trail->push('Users',route('users'));
 });
 
-// Home > Admin > Users > List
-Breadcrumbs::for('users_list', function ($trail) {
+// Home > Admin > Users > Create
+Breadcrumbs::for('user_create', function ($trail) {
     $trail->parent('users');
-    $trail->push('List', route('users_list'));
+    $trail->push('Create', route('user_create'));
 });
 
 // Home > Admin > Users > Edit
@@ -62,14 +62,15 @@ Breadcrumbs::for('user_edit', function ($trail) {
 // Home > Admin > Content
 Breadcrumbs::for('content', function ($trail) {
     $trail->parent('admin');
-    $trail->push('Content');
+    $trail->push('Content', route('content'));
 });
 
-// Home > Admin > Content > List
-Breadcrumbs::for('content_list', function ($trail) {
+// Home > Admin > Content > create
+Breadcrumbs::for('content_create', function ($trail) {
     $trail->parent('content');
-    $trail->push('List', route('content_list'));
+    $trail->push('Create');
 });
+
 
 // Home > Admin > Content > Edit
 Breadcrumbs::for('content_edit', function ($trail) {

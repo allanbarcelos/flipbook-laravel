@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Faker\Generator as FakerGenerator;
 use Faker\Factory as FakerFactory;
+use Carbon\Carbon;
 class FakerServiceProvider extends ServiceProvider
 {
     /**
@@ -80,9 +81,25 @@ class FakerServiceProvider extends ServiceProvider
                     'Vila São Cristóvão II','Vila São José','Vila São Vicente','Villaggio Di Fiori'
                 ];
 
+                protected static function generatePIN($digits = 4) {
+                    $i = 0;
+                    $pin = "";
+                    while($i < $digits){
+                        $pin .= mt_rand(0, 9);
+                        $i++;
+                    }
+
+                    return $pin . Carbon::now()->format('Ymd');
+                }
+
                 public function neighborhood()
                 {
                     return static::randomElement(static::$neighborhood);
+                }
+
+                public function contract()
+                {
+                    return static::generatePIN();
                 }
             };
 

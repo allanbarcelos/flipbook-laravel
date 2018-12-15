@@ -6,12 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Content extends Model
 {
-  protected $fillable = [
-      'title', 'editionDate'
-  ];
 
-  public function files()
-  {
-      return $this->belongsToMany(File::class);
-  }
+  protected $table = "content";
+
+  protected $fillable = [
+    'title', 'edition_date','first_page','full'
+  ];
+    
 }

@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,30 +13,36 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/newspaper/read/{year}/{month}/{day}', 'ReaderController@index')->name('news_read');
-Route::get('/newspaper/search', 'ContentController@search')->name('news_search');
 
-Route::get('/user', 'UsersController@index')->name('user');
+Route::get('/user', 'UserController@index')->name('user');
+Route::get('/user/edit', 'UserController@edit')->name('user_edit');
+Route::get('/user/change-password', 'UserController@changePassword')->name('user_change_password');
 
-Route::get('/admin', function () { return true; })->name('admin');
-Route::any('/admin/users', function () { return true; })->name('users');
-Route::get('/admin/users/list', 'UsersController@list')->name('users_list');
+Route::get('/admin', null)->name('admin');
+
+Route::get('/admin/users', 'UsersController@index')->name('users');
 Route::get('/admin/users/search', 'UsersController@search');
-Route::any('/admin/users/create', 'UsersController@create')->name('users_create');
-Route::get('/admin/users/view', 'UsersController@view')->name('users_view');
-Route::get('/admin/users/edit', 'UsersController@edit')->name('users_edit');
-Route::delete('/admin/users/delete', function () { return true; })->name('users_delete');
+Route::any('/admin/user/create', 'UsersController@create')->name('user_create');
 
-Route::any('/admin/clients', function () { return true; })->name('client');
+Route::get('/admin/user/view', 'UsersController@view')->name('user_view');
+Route::get('/admin/user/edit', 'UsersController@edit')->name('user_edit');
+Route::post('/admin/users/delete', 'UsersController@delete')->name('users_delete');
+
+Route::any('/admin/clients', 'ClientsController@index')->name('clients');
 Route::get('/admin/clients/list', 'ClientsController@list')->name('clients_list');
 Route::get('/admin/clients/search', 'ClientsController@search');
-Route::any('/admin/clients/create', 'ClientsController@create')->name('clients_create');
-Route::get('/admin/client/view', 'ClientsController@view')->name('client_view');
-Route::get('/admin/clients/edit', 'ClientsController@edit')->name('client_edit');
-Route::delete('/admin/clients/delete', function () { return true; })->name('client_delete');
+Route::post('/admin/clients/delete', 'ClientsController@delete')->name('clients_delete');
 
-Route::any('/admin/content', function () { return true; })->name('content');
-Route::any('/admin/content/list', 'ContentController@list')->name('content_list');
+Route::get('/admin/client', null)->name('client');
+Route::any('/admin/client/create', 'ClientsController@create')->name('client_create');
+Route::get('/admin/client/view', 'ClientsController@view')->name('client_view');
+Route::get('/admin/client/edit', 'ClientsController@edit')->name('client_edit');
+
+Route::any('/admin/content', 'ContentController@index')->name('content');
 Route::any('/admin/content/create', 'ContentController@create')->name('content_create');
 Route::any('/admin/content/edit', 'ContentController@create')->name('content_edit');
-Route::delete('/admin/content/delete', function () { return true; })->name('content_delete');
+Route::any('/admin/content/search', 'ContentController@search')->name('content_search');
+Route::post('/admin/content/delete', 'ContentController@delete')->name('content_delete');
+
+Route::get('/newspaper/read/{year}/{month}/{day}', 'ReaderController@index')->name('news_read');
+Route::get('/newspaper/search', 'ContentController@search')->name('news_search');

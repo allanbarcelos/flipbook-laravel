@@ -13,7 +13,7 @@ class ClientsController extends Controller
     $this->middleware('auth');
   }
 
-  public function list(Request $request)
+  public function index(Request $request)
   {
     $request->user()->authorizeRoles(['administrator']);
 
@@ -94,7 +94,7 @@ class ClientsController extends Controller
         ->paginate(10);
       }
 
-      return view('clients.list', compact('users'));
+      return view('clients.index', compact('users'));
     }
 
     public function edit($id)
@@ -129,7 +129,7 @@ class ClientsController extends Controller
 
       }
 
-      return view('clients.form');
+      return view('clients.create');
     }
 
 
