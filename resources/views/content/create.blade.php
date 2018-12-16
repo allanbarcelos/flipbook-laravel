@@ -73,11 +73,12 @@
           <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <br />
+
         <div class="alert alert-success alert-dismissible" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <i class="fa fa-check"></i> Arquivo enviado com sucesso.
+          <i class="fa fa-check"></i> <p id="status"></p>
         </div>
 
       </div>
@@ -90,7 +91,7 @@
        <hr/>
        <p>
          Nesta versão esta habilitado o envio de apenas um (1) arquivo por vez, para maior comodidade se o arquivo
-         seguir o padrão de nomemclatura os campos serão  automaticamente preenchidos.
+         seguir o padrão de nomenclatura os campos serão  automaticamente preenchidos.
 
 
          <blockquote  class="blockquote">
@@ -172,7 +173,7 @@ $('.custom-file-input').on('change',function(){
       bar.css("width", percentVal);
     },
     complete: function(xhr) {
-      //status.html(xhr.responseText);
+      $("#status").html(xhr.responseText);
       alert.show();
       console.log("complete");
     }
