@@ -138,7 +138,7 @@ $('.custom-file-input').on('change',function(){
 
   }
 });
-/*
+
 (function() {
 
   var bar = $('.progress-bar');
@@ -179,6 +179,6 @@ $('.custom-file-input').on('change',function(){
   });
 
 })();
-*/
+
 </script>
 @stop
