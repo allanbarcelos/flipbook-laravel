@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Role;
 use Carbon\Carbon;
 use App\Events\UserCreated;
+use Illuminate\Support\Facades\Validator;
+use Event;
+
 class ClientsController extends Controller
 {
   public function __construct()
@@ -100,7 +104,7 @@ class ClientsController extends Controller
     public function edit($id)
     {
       $client = User::findOrFail($id);
-    //  dd($client);
+      //  dd($client);
       return view('clients.form', ['client' => $client]);
     }
 
@@ -108,26 +112,34 @@ class ClientsController extends Controller
     {
       $request->user()->authorizeRoles(['administrator']);
 
-      if($request->post())
+
+      if($request->isMethod('post'))
       {
 
-        if(User::where('cpf','=',$request->post()['cpf']))
-        {
-          return view('clients.create');
-        }
 
-        $user = User::create([
-          'name'     => $data['name'],
-          'email'    => $data['email'],
-          'password' => bcrypt($data['password']),
+        $validator = Validator::make($request->all(), [
+          'cpf' => 'required|unique:cpf_user,cpf',
+          'email' => 'required|email|unique:users,email',
+          'contract' => 'required|unique:contract_user,number',
         ]);
 
+        if ($validator->fails())
+        {
+          return back()->withInput()
+          ->withErrors($validator)
+          ->withInput();
+        }
+
+
+        $user = User::create($request->all());
+
         $user->roles()
-             ->attach(Role::where('name', 'client')->first());
+          ->attach(Role::where('name', 'client')->first());
 
         //Fire the event
-        event(new UserCreated($user));
-        return $user;
+        Event::fire(new UserCreated($user));
+
+        return redirect()->back()->with('message', 'Cliente cadastrado com sucesso');
 
       }
 

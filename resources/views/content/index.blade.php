@@ -49,7 +49,7 @@
           <th>Id</th>
           <th>Path</th>
           <th>Data da edição</th>
-          <th>&nbsp;</th>
+          <th>Status</th>
         </tr>
       </thead>
 
@@ -58,9 +58,9 @@
         @foreach($content as $cont)
         <tr data-id="{{ $cont->id }}" class="dataRow">
           <td>{{ $cont->id }}</td>
-          <td>{{ $cont->path }}</td>
+          <td><a href="{{ $cont->path }}">Visualizar</a></td>
           <td>{{ date('d M Y', strtotime($cont->edition_date)) }}</td>
-          <td>{{ $cont->created_at->format('d/m/Y') }}</td>
+          <td>Processando</td>
         </tr>
         @endforeach
 
@@ -120,4 +120,13 @@
 @section('scripts')
 <script src="//cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js"></script>
 <script type="text/javascript" src="{{asset('js/table-select-delete.js')}}"></script>
+
+<script type="text/javascript">
+if (typeof(Worker) !== "undefined") {
+  // Yes! Web worker support!
+  // Some code.....
+} else {
+  // Sorry! No Web Worker support..
+}
+</script>
 @stop

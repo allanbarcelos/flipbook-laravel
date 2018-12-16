@@ -5,7 +5,11 @@
   <div class="col-md-7">
     <h3>Última edição</h3>
     <hr />
-    <div id="the-canvas"></div>
+    <div id="the-canvas">
+      @foreach ($lastEdition as $data)
+      <img src="{{ $data['first_page'] }}" alt="" class="img-thumbnail">        
+      @endforeach
+    </div>
     <button type="button" name="button" class="btn btn-lg btn-block btn-success ">Ler Agora</button>
   </div>
 

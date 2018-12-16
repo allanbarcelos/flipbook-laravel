@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use App\Events\ContentPdfFirstPageToJpegEvent;
 
+use Event;
+use App\Events\ContentCreated;
+
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
+
+//use Spatie\PdfToImage\Pdf;
+
+use App\Libraries\PdfToImage;
+
 class ContentController extends Controller
 {
 
@@ -84,65 +94,52 @@ class ContentController extends Controller
     public function create(Request $request)
     {
 
-      if($request->isMethod('post')){
+      if($request->isMethod('post'))
+      {
 
         $validator = Validator::make($request->all(), [
           'edition_date' => 'required',
-          'pdf_file' => 'required|mimes:pdf'
+          'pdf_file' => 'required|mimes:pdf',
+          'title' => 'required|max:60'
         ]);
+
+        \Log::info('pdf_file', [$request->hasFile('pdf_file')]);
 
         if ($validator->fails())
         {
           return back()->withInput()
-          ->withErrors($validator)
-          ->withInput();
+                       ->withErrors($validator)
+                       ->withInput();
         }
 
         if($request->hasFile('pdf_file'))
         {
-
-          //get filename with extension
-          $filenamewithextension = $request->file('pdf_file')->getClientOriginalName();
-
-          //get filename without extension
-          $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
-
-          //get file extension
-          $extension = $request->file('pdf_file')->getClientOriginalExtension();
-
-          //filename to store
-          $filenametostore = md5($filename . time()) . '_' . time() . '.' . $extension;
-
-
-          $content = new Content();
-          $content->filename = $filenametostore;
-          $content->requestFile = $request->file('pdf_file');
-          $s3 = $content->storage();
-
-          $request->request->add(['path' => $s3]);
-
-          //$pdfToJPEG = new \Spatie\PdfToImage\Pdf($request->file('pdf_file'));
-          //$pdfToJPEG->saveImage(storage_path('tmp/'));
-
-          $content = new Content();
-          $content->filename = $filenametostore;
-          $content->requestFile = $request->file('pdf_file');
-          $s3 = $content->storage();
-
-
-          if(Content::create($request->post()))
+    
+          $content = Content::create($request->post());
+          if($content)
           {
-            return back()->withInput();
-          }
 
-          //$url = Storage::disk('s3')->url('YOUR_FILENAME_HERE');
-          //Store $filenametostore in the database
+            $filenamewithextension = $request->file('pdf_file')->getClientOriginalName();
+            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+            $pdf_file = md5($filename . time()) . '_' . time() . '.' . 'pdf';
+
+            \Log::info('pdf_file', [$pdf_file]);
+
+
+            if($request->file('pdf_file')->storeAs( '.', $pdf_file, 'root' ))
+            {
+
+              Event::fire(new ContentCreated($content, $pdf_file));
+
+              return redirect()->back()
+                               ->with('message', 'Conteudo cadastrado com sucesso');
+            }
+          }
         }
 
-
         return back()->withInput()
-        ->withErrors()
-        ->withInput();
+                     ->withErrors()
+                     ->withInput();
       }
 
       return view('content.create');

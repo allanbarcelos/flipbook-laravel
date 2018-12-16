@@ -17,7 +17,7 @@ class UserTableSeeder extends Seeder
         $role_client = Role::where('name', 'client')->first();
         $role_admin  = Role::where('name', 'administrator')->first();
 
-        $users = factory(User::class, 50)->create()->each(function($u) {
+        $users = factory(User::class, 5)->create()->each(function($u) {
             $role_client = Role::where('name', 'client')->first();
             $u->roles()->attach($role_client);
             $u->address()->save(factory(App\Address::class)->make());

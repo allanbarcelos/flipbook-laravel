@@ -26,7 +26,13 @@ class SendRegisterationEmail implements ShouldQueue
   */
   public function handle(UserCreated $event)
   {
-    $user = $event->user;
+
+    $user = User::find($event->userId)->toArray();
+
+    Mail::send('emails.mailEvent', $user, function($message) use ($user) {
+        $message->to($user['email']);
+        $message->subject('Event Testing');
+    });
 
     //Send Email Code Here
   }

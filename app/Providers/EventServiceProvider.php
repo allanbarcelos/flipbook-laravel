@@ -19,12 +19,12 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
 
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
-        ],
         'App\Events\UserCreated' => [
             'App\Listeners\SendRegisterationEmail'
-        ]
+        ],
+        'App\Events\ContentCreated' => [
+            'App\Listeners\FirstPagePdfToJpeg'
+        ],
     ];
 
     /**

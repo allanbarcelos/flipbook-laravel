@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Content;
 use Carbon\Carbon;
+
 class HomeController extends Controller
 {
     /**
@@ -27,7 +28,7 @@ class HomeController extends Controller
     {
         $request->user()->authorizeRoles(['administrator','client']);
 
-
+        /*
         if($request->isMethod('post'))
         {
 
@@ -43,6 +44,12 @@ class HomeController extends Controller
         return view::make('home.index')
                     ->with('month_editions', $month_editions)
                     ->with('last_edition', $last_edition);
+                    */
+        $lastEdition = Content::orderBy('edition_date', 'desc')->first()->get();
+
+        return view( "home.index", [
+          'lastEdition' => $lastEdition
+        ]);
     }
 
 
