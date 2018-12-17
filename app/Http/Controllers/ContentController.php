@@ -101,20 +101,23 @@ class ContentController extends Controller
           'edition_date' => 'required',
           'pdf_file' => 'required|mimes:pdf',
           'title' => 'required|max:60'
+        ],[],[
+          'edition_date' => 'Data da edição',
+          'pdf_file' => 'Arquivo',
+          'title' => 'Titulo'
         ]);
-
-        \Log::info('pdf_file', [$request->hasFile('pdf_file')]);
 
         if ($validator->fails())
         {
-          return back()->withInput()
-                       ->withErrors($validator)
-                       ->withInput();
+          return response()->json([
+              'success' => false,
+              'errors' => $validator->getMessageBag()->toArray(),
+          ], 400);
         }
 
         if($request->hasFile('pdf_file'))
         {
-    
+
           $content = Content::create($request->post());
           if($content)
           {
@@ -123,23 +126,28 @@ class ContentController extends Controller
             $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
             $pdf_file = md5($filename . time()) . '_' . time() . '.' . 'pdf';
 
-            \Log::info('pdf_file', [$pdf_file]);
-
-
             if($request->file('pdf_file')->storeAs( '.', $pdf_file, 'root' ))
             {
 
               Event::fire(new ContentCreated($content, $pdf_file));
 
-              return redirect()->back()
-                               ->with('message', 'Conteudo cadastrado com sucesso');
+              return response()->json([
+                'status' => [
+                  'type' => 'success',
+                  'message' => 'Upload eftuado com sucesso',
+                ]
+              ]);
+
             }
           }
         }
 
-        return back()->withInput()
-                     ->withErrors()
-                     ->withInput();
+        return response()->json([
+          'status' => [
+            'type' => 'error',
+            'message' => '<b>Servidor:</b> Arquivo não esta presente.',
+          ]
+        ]);
       }
 
       return view('content.create');

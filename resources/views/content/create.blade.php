@@ -8,18 +8,12 @@
     <h3>Adicionar edição</h3>
   </div>
 </div>
-<div class="row">
-  &nbsp;
-</div>
-@if ($errors->any())
-<div class="alert alert-danger">
-  <ul class="unstyled">
-    @foreach ($errors->all() as $error)
-    <li>{{ $error }}</li>
-    @endforeach
+
+<div class="alert alert-danger invisible" id="statusValidate">
+  <ul class="list-unstyled">
   </ul>
 </div>
-@endif
+
 
 @if(session()->has('message'))
 <div class="alert alert-success">
@@ -29,11 +23,6 @@
 
 <div class="row">
   <div class="col-md-6">
-
-
-    <div class="row">
-      &nbsp;
-    </div>
     <div class="row">
       <div class="col-md-12">
 
@@ -69,16 +58,16 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <div class="progress">
+        <div class="progress invisible">
           <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <br />
 
-        <div class="alert alert-success alert-dismissible" role="alert">
+        <div class="alert alert-dismissible invisible" id="status" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <i class="fa fa-check"></i> <p id="status"></p>
+          <i class="fa"></i>
         </div>
 
       </div>
@@ -87,21 +76,21 @@
 
   <div class="col-md-6">
     <div class="alert alert-warning" role="alert">
-       <h4 class="alert-heading"><i class="fa fa-info-circle"></i> Atenção</h4>
-       <hr/>
-       <p>
-         Nesta versão esta habilitado o envio de apenas um (1) arquivo por vez, para maior comodidade se o arquivo
-         seguir o padrão de nomenclatura os campos serão  automaticamente preenchidos.
+      <h4 class="alert-heading"><i class="fa fa-info-circle"></i> Atenção</h4>
+      <hr/>
+      <p>
+        Nesta versão esta habilitado o envio de apenas um (1) arquivo por vez, para maior comodidade se o arquivo
+        seguir o padrão de nomenclatura os campos serão  automaticamente preenchidos.
 
 
-         <blockquote  class="blockquote">
-           <h5> Modelo </h5>
-           <code>"Este é um titulo de capa 10-12-2018.pdf"</code>
-         </blockquote>
+        <blockquote  class="blockquote">
+          <h5> Modelo </h5>
+          <code>"Este é um titulo de capa 10-12-2018.pdf"</code>
+        </blockquote>
 
-         <img src="{{asset('img/modelo-nomeclatura-pdf.png')}}" class="img-thumbnail" alt="Responsive image">
+        <img src="{{asset('img/modelo-nomeclatura-pdf.png')}}" class="img-thumbnail" alt="Responsive image">
 
-       </p>
+      </p>
     </div>
   </div>
 </div>
@@ -145,16 +134,14 @@ $('.custom-file-input').on('change',function(){
   var bar = $('.progress-bar');
   //var status = $('#status');
   var progress = $(".progress");
-  var alert = $(".alert.alert-success");
-  progress.hide();
-  alert.hide();
+  var alert = $("#status");
 
   $('form').ajaxForm({
     url: "{{ route('content_create')}}",
     type: 'post',
     beforeSend: function() {
       var percentVal = '0%';
-      progress.show();
+      progress.removeClass('invisible');
       bar.width(percentVal);
       bar.html(percentVal);
       bar.css("width", percentVal);
@@ -166,15 +153,45 @@ $('.custom-file-input').on('change',function(){
       bar.css("width", percentVal);
       //console.log(percentVal, position, total);
     },
-    success: function() {
+    success: function(data) {
       var percentVal = '100%';
       bar.width(percentVal);
       bar.html(percentVal);
       bar.css("width", percentVal);
+
+      var statusType = data.status.typ;
+
+      if(statusType == 'success' || 'error')
+      {
+        $("#status").removeClass('invisible');
+
+        if(data.status.type === "success")
+        {
+          $(".alert.alert-dismissible").addClass("alert-success");
+          $("div.alert i.fa").addClass("fa-check");
+          $("#status").html(data.status.message);
+        }
+        if(data.status.type === "error")
+        {
+          $(".alert.alert-dismissible").addClass("alert-danger");
+          $("div.alert i.fa").addClass("fa-exclamation");
+          $("#status").append(data.status.message);
+        }
+      }
+
     },
+
+    error:  function(data) {
+
+      $("#statusValidate").removeClass('invisible');
+
+      $.each(data.responseJSON.errors, function( index, value ) {
+        $("#statusValidate ul").append("<li>" + value + "</li>");
+      });
+
+    },
+
     complete: function(xhr) {
-      $("#status").html(xhr.responseText);
-      alert.show();
       console.log("complete");
     }
   });
