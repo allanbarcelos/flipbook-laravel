@@ -1,25 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-{{ Breadcrumbs::render('homeIndex') }}
-
-<div class="row">
-  <div class="col-md-6">
-    <h3>Última edição</h3>
-    <hr />
-
-
-  </div>
-
-  <div class="col-md-6">
-    <h3>Última edição</h3>
-    <hr />
-
-
-  </div>
-
-
-</div>
 
 <div id="the-canvas"></div>
 
@@ -61,7 +42,7 @@
             var arr = [];
 
             for(var num = 1; num <= pdfDoc.numPages; num++)
-            arr[num] = pdfDoc.getPage(num).then(renderPage);
+              arr[num] = pdfDoc.getPage(num).then(renderPage);
 
             Promise.all(arr)
             .then(
@@ -85,7 +66,7 @@
 
 
         pdfjsLib.disableWorker = true;
-        pdfjsLib.getDocument('/curriculo.pdf').then(renderPages);
+        pdfjsLib.getDocument('//elasticbeanstalk-us-east-2-006536376604.s3.us-east-2.amazonaws.com/4cf9c03e5fdbbbb13c95c71b12715801_1545037310.pdf').then(renderPages);
 
     });
 

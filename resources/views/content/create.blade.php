@@ -53,9 +53,9 @@
         </form>
       </div>
     </div>
-    <div class="row">
-      &nbsp;
-    </div>
+
+    <br />
+
     <div class="row">
       <div class="col-md-12">
         <div class="progress invisible">
@@ -63,13 +63,19 @@
         </div>
         <br />
 
+        <div class="row invisible" id="processing">
+          <div class="col-md-12">
+            <i class="fa fa-cog fa-spin"></i>
+            <i class="loader processing"></i>
+          </div>
+        </div>
+
         <div class="alert alert-dismissible invisible" id="status" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
           <i class="fa"></i>
         </div>
-
       </div>
     </div>
   </div>
@@ -132,9 +138,7 @@ $('.custom-file-input').on('change',function(){
 (function() {
 
   var bar = $('.progress-bar');
-  //var status = $('#status');
   var progress = $(".progress");
-  var alert = $("#status");
 
   $('form').ajaxForm({
     url: "{{ route('content_create')}}",
@@ -146,35 +150,43 @@ $('.custom-file-input').on('change',function(){
       bar.html(percentVal);
       bar.css("width", percentVal);
     },
+
     uploadProgress: function(event, position, total, percentComplete) {
       var percentVal = percentComplete + '%';
       bar.width(percentVal);
       bar.html(percentVal);
       bar.css("width", percentVal);
-      //console.log(percentVal, position, total);
+
+      if(percentual == "100%")
+      {
+        $("#processing").removeClass("invisible");
+      }
     },
+
     success: function(data) {
       var percentVal = '100%';
       bar.width(percentVal);
       bar.html(percentVal);
       bar.css("width", percentVal);
 
-      var statusType = data.status.typ;
+      $("#processing").addClass("invisible");
+
+      var statusType = data.status.type;
 
       if(statusType == 'success' || 'error')
       {
         $("#status").removeClass('invisible');
 
-        if(data.status.type === "success")
+        if(statusType === "success")
         {
-          $(".alert.alert-dismissible").addClass("alert-success");
-          $("div.alert i.fa").addClass("fa-check");
-          $("#status").html(data.status.message);
+          $("#status").addClass("alert-success");
+          $("div#status i.fa").addClass("fa-check");
+          $("#status").append(data.status.message);
         }
-        if(data.status.type === "error")
+        if(statusType === "error")
         {
-          $(".alert.alert-dismissible").addClass("alert-danger");
-          $("div.alert i.fa").addClass("fa-exclamation");
+          $("#status").addClass("alert-danger");
+          $("#status i.fa").addClass("fa-exclamation");
           $("#status").append(data.status.message);
         }
       }
@@ -182,13 +194,10 @@ $('.custom-file-input').on('change',function(){
     },
 
     error:  function(data) {
-
       $("#statusValidate").removeClass('invisible');
-
       $.each(data.responseJSON.errors, function( index, value ) {
         $("#statusValidate ul").append("<li>" + value + "</li>");
       });
-
     },
 
     complete: function(xhr) {

@@ -45,8 +45,19 @@ class HomeController extends Controller
                     ->with('month_editions', $month_editions)
                     ->with('last_edition', $last_edition);
                     */
-        $lastEdition = Content::orderBy('edition_date', 'desc')->first()->get();
 
+
+
+
+          $lastEdition = Content::orderBy('edition_date','desc')->where('first_page', '!=', null)->first()->get();
+
+          foreach ($lastEdition as $data)
+          {
+            $editionDate = explode("-",$data->edition_date);
+              $data->year = $editionDate[0];
+              $data->day = $editionDate[1];
+              $data->month = $editionDate[2];
+          }
         return view( "home.index", [
           'lastEdition' => $lastEdition
         ]);

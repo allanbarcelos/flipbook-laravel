@@ -1,16 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="row">
+
   <div class="col-md-7">
+    <br />
     <h3>Última edição</h3>
     <hr />
+    @foreach ($lastEdition as $data)
+
     <div id="the-canvas">
-      @foreach ($lastEdition as $data)
-      <img src="{{ $data['first_page'] }}" alt="" class="img-thumbnail">        
-      @endforeach
+      <img src="{{ $data->first_page }}" alt="" class="img-thumbnail offset-md-2">
+
     </div>
-    <button type="button" name="button" class="btn btn-lg btn-block btn-success ">Ler Agora</button>
+    <br />
+    <div class="row">
+      <div class="col-md-8">
+        <a href="{{route('news_read',['year' => $data->year, 'month' => $data->month, 'day' => $data->day])}}" class="btn btn-lg btn-block btn-success offset-md-3">Ler Agora</a>
+      </div>
+    </div>
+    @endforeach
   </div>
 
   <div class="col-md-5 bg-secondary">

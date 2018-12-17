@@ -103,7 +103,7 @@ class ContentController extends Controller
           'title' => 'required|max:60'
         ],[],[
           'edition_date' => 'Data da edição',
-          'pdf_file' => 'Arquivo',
+          'pdf_file' => 'Arquivo em PDF',
           'title' => 'Titulo'
         ]);
 

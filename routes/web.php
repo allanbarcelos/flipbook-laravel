@@ -44,5 +44,5 @@ Route::any('/admin/content/edit', 'ContentController@create')->name('content_edi
 Route::any('/admin/content/search', 'ContentController@search')->name('content_search');
 Route::post('/admin/content/delete', 'ContentController@delete')->name('content_delete');
 
-Route::get('/newspaper/read/{year}/{month}/{day}', 'ReaderController@index')->name('news_read');
+Route::get('/read/{year}/{month}/{day}', 'ReaderController@index')->name('news_read');
 Route::get('/newspaper/search', 'ContentController@search')->name('news_search');

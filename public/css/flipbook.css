@@ -126,7 +126,6 @@ i.loader.processing::before {
   50% {content: 'processando ...';}
   75% {content: 'processando ....';}
   100% {content: 'processando .....';}
-
 }
 
 @keyframes processing {
