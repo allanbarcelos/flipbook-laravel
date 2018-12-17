@@ -157,7 +157,7 @@ $('.custom-file-input').on('change',function(){
       bar.html(percentVal);
       bar.css("width", percentVal);
 
-      if(percentual == "100%")
+      if(percentVal == "100%")
       {
         $("#processing").removeClass("invisible");
       }
