@@ -132,22 +132,18 @@ class ContentController extends Controller
               Event::fire(new ContentCreated($content, $pdf_file));
 
               return response()->json([
-                'status' => [
-                  'type' => 'success',
+                  'success' => true,
                   'message' => 'Upload eftuado com sucesso',
-                ]
-              ]);
+              ], 200);
 
             }
           }
         }
 
         return response()->json([
-          'status' => [
-            'type' => 'error',
-            'message' => '<b>Servidor:</b> Arquivo não esta presente.',
-          ]
-        ]);
+            'success' => false,
+            'errors' => '<b>Servidor:</b> Arquivo não esta presente.',
+        ], 400);
       }
 
       return view('content.create');

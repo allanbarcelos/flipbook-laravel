@@ -108,7 +108,7 @@ class FirstPagePdfToJpeg implements ShouldQueue
   * @param  \Exception  $exception
   * @return void
   */
-  public function failed(OrderShipped $event, $exception)
+  public function failed(ContentCreated $event, $exception)
   {
     //
   }
