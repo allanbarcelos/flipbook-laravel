@@ -98,7 +98,7 @@ class ContentController extends Controller
       {
 
         $validator = Validator::make($request->all(), [
-          'edition_date' => 'required',
+          'edition_date' => 'required|unique:content',
           'pdf_file' => 'required|mimes:pdf',
           'title' => 'required|max:60'
         ],[],[
@@ -119,6 +119,7 @@ class ContentController extends Controller
         {
 
           $content = Content::create($request->post());
+
           if($content)
           {
 

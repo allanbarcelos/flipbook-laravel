@@ -11,7 +11,8 @@ class Content extends Model
   protected $table = "content";
 
   protected $fillable = [
-    'path', 'edition_date'
+    'title', 'full_file', 'first_page', 'edition_date'
   ];
 
+  protected $dates = ['edition_date'];
 }

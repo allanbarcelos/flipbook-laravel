@@ -28,38 +28,21 @@ class HomeController extends Controller
     {
         $request->user()->authorizeRoles(['administrator','client']);
 
-        /*
-        if($request->isMethod('post'))
-        {
+        $monthEditions = Content::whereNotNull('first_page')->whereMonth('edition_date', Carbon::now()->month)->get();
 
-        }
+        $lastEdition = Content::whereNotNull('first_page')->orderBy('edition_date', 'desc')->first();
 
-        $year = Carbon::now()->format('m');
-        $month = Carbon::now()->format('Y');
+        $edition_date = explode("-", $lastEdition->edition_date->format('Y-m-d') );
+        $edition_date = [
+            "year" => $edition_date[0],
+            "month" => $edition_date[1],
+            "day" => $edition_date[2]
+        ];
 
-        $month_editions = Content::whereYear('edition_date', '=', $year)
-                              ->whereMonth('edition_date', '=', $month)
-                              ->get();
-
-        return view::make('home.index')
-                    ->with('month_editions', $month_editions)
-                    ->with('last_edition', $last_edition);
-                    */
-
-
-
-
-          $lastEdition = Content::orderBy('edition_date','desc')->where('first_page', '!=', null)->first()->get();
-
-          foreach ($lastEdition as $data)
-          {
-            $editionDate = explode("-",$data->edition_date);
-              $data->year = $editionDate[0];
-              $data->day = $editionDate[1];
-              $data->month = $editionDate[2];
-          }
         return view( "home.index", [
-          'lastEdition' => $lastEdition
+            'lastEdition' => $lastEdition,
+            'edition_date' => $edition_date,
+            'month_editions' => $monthEditions
         ]);
     }
 
