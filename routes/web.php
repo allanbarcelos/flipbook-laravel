@@ -45,6 +45,5 @@ Route::any('/admin/content/search', 'ContentController@search')->name('content_s
 Route::post('/admin/content/delete', 'ContentController@delete')->name('content_delete');
 Route::any('/admin/content/check-processing', 'ContentController@checkProcessing')->name('content_checkProcessing');
 
-
 Route::get('/read/{year}/{month}/{day}', 'ReaderController@index')->name('news_read');
 Route::get('/newspaper/search', 'ContentController@search')->name('news_search');
