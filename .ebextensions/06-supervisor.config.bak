@@ -44,7 +44,10 @@ files:
            #supervisord -c /tmp/new_supervisord_conf
 
 commands:
-    01-stop:
+    01-install:
+        command:
+            sudo easy_install supervisor==3.1.3
+    02-stop:
         command:
             supervisorctl stop all
     02-load:
