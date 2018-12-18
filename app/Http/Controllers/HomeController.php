@@ -30,6 +30,8 @@ class HomeController extends Controller
 
         $monthEditions = Content::whereNotNull('first_page')->whereMonth('edition_date', Carbon::now()->month)->get();
 
+
+
         $lastEdition = Content::whereNotNull('first_page')->orderBy('edition_date', 'desc')->first();
 
         $edition_date = explode("-", $lastEdition->edition_date->format('Y-m-d') );
@@ -42,7 +44,7 @@ class HomeController extends Controller
         return view( "home.index", [
             'lastEdition' => $lastEdition,
             'edition_date' => $edition_date,
-            'month_editions' => $monthEditions
+            'monthEditions' => $monthEditions
         ]);
     }
 

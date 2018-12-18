@@ -19,6 +19,8 @@ class CreateContentTable extends Migration
             $table->date('edition_date')->unique();
             $table->string('full_file')->nullable();
             $table->string('first_page')->nullable();
+            $table->string('thumbnail')->nullable();
+
             $table->timestamps();
         });
     }

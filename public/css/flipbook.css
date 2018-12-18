@@ -47,12 +47,15 @@ div.row div.col-md-5.bg-secondary hr
   margin: -50px auto 10px;
 }
 
+
 div#app main.container div.row [class*='col-'] h3
 {
   margin-top: 15px;
   margin-bottom: 15px;
 
 }
+
+
 
 div.row [class*='col-'].bg-secondary h3 > i {
   margin: 15px;

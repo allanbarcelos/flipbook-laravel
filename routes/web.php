@@ -13,6 +13,7 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/{year}/{mont}/{day}', 'HomeController@index')->name('home_edition');
 
 Route::get('/user', 'UserController@index')->name('user');
 Route::get('/user/edit', 'UserController@edit')->name('user_edit');
