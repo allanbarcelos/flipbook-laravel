@@ -25,8 +25,6 @@ class ContentCreated
     public function __construct(Content $content, $file)
     {
 
-      \Log::info('EVENT file', [$file]);
-
       $this->content = $content;
       $this->file = $file;
 

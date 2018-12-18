@@ -2,7 +2,6 @@
 
 @section('content')
 {{ Breadcrumbs::render('content') }}
-
 <div class="row">
   <div class="col-md-1">
     <a href="{{route('content_create')}}" class="btn btn-primary" id="addButton">
@@ -26,10 +25,10 @@
       <div class="form-group">
         <div class="input-group">
           <input type="text"
-                 class="form-control border-right-0"
-                 aria-label="Default"
-                 aria-describedby="inputGroup-sizing-default"
-                 placeholder="Search for..." name="search">
+          class="form-control border-right-0"
+          aria-label="Default"
+          aria-describedby="inputGroup-sizing-default"
+          placeholder="Search for..." name="search">
           <div class="input-group-append">
             <span class="input-group-text bg-white" id="inputGroup-sizing-default">
               <i class="fa fa-search"></i>
@@ -47,23 +46,20 @@
       <thead class="bg-secondary text-white">
         <tr>
           <th>Id</th>
-          <th>Path</th>
+          <th>Titulo</th>
           <th>Data da edição</th>
           <th>Status</th>
         </tr>
       </thead>
-
       <tbody>
-
         @foreach($content as $cont)
         <tr data-id="{{ $cont->id }}" class="dataRow">
           <td>{{ $cont->id }}</td>
-          <td><a href="{{ $cont->path }}">Visualizar</a></td>
+          <td>{{ $cont->title }}</td>
           <td>{{ date('d M Y', strtotime($cont->edition_date)) }}</td>
-          <td>Processando</td>
+          <td id="p{{ $cont->id }}">Publicado</td>
         </tr>
         @endforeach
-
       </tbody>
     </table>
   </div>
@@ -115,18 +111,72 @@
 
 @section('styles')
 <link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css"  href="http://cdn.cloudwall.me/1.2/general.css" />
 @stop
 
 @section('scripts')
 <script src="//cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js"></script>
 <script type="text/javascript" src="{{asset('js/table-select-delete.js')}}"></script>
-
 <script type="text/javascript">
-if (typeof(Worker) !== "undefined") {
-  // Yes! Web worker support!
-  // Some code.....
-} else {
-  // Sorry! No Web Worker support..
+
+var checkProcessing = null,
+
+URL = window.URL || (window.webkitURL);
+
+window.URL = URL;
+
+var checkProcessing = function() {
+  setInterval(function(){
+    fetch("{{route('content_checkProcessing')}}").then(response => {
+      return response.json();
+    }).then(data => {
+      postMessage(data);
+    }).catch(err => {
+      // Do something for an error here
+    });
+  },1000);
 }
+
+var workerData = new Blob(['(' + checkProcessing.toString() + ')()'], {
+  type: "text/javascript"
+});
+
+function init() {
+
+  if (typeof (Worker) === undefined)
+  {
+    return false;
+  }
+
+  checkProcessing = new Worker(window.URL.createObjectURL(workerData));
+
+  checkProcessing.onmessage = function (e) {
+
+    var processing = [];
+
+    $.each(e.data, function(index, value) {
+      if(!processing.includes(value.id))
+        processing.push("p" + value.id);
+    });
+
+    $('table#users-table > tbody > tr.dataRow > td:nth-child(4)').each(function(index, element) {
+
+      if(processing.includes(element.id))
+        if(element.innerHTML === "Publicado")
+          element.innerHTML = "Processando";
+
+      if(!processing.includes(element.id))
+        if(element.innerHTML === "Processando")
+          element.innerHTML = "Publicado";
+
+    });
+
+    processing = [];
+  };
+
+}
+
+init();
+
 </script>
 @stop
