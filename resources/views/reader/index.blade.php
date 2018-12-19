@@ -64,9 +64,8 @@
             );
         }
 
-
         pdfjsLib.disableWorker = true;
-        pdfjsLib.getDocument('//elasticbeanstalk-us-east-2-006536376604.s3.us-east-2.amazonaws.com/4cf9c03e5fdbbbb13c95c71b12715801_1545037310.pdf').then(renderPages);
+        pdfjsLib.getDocument('{{$edition->full_file}}').then(renderPages);
 
     });
 

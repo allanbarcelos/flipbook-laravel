@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Content;
 
 class ReaderController extends Controller
 {
@@ -11,8 +12,13 @@ class ReaderController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request, $year, $month, $day)
     {
-      return view('reader/index');
+        $request->user()->authorizeRoles(['administrator','client']);
+
+        $edition = Content::where('edition_date', '=', date($year."-".$month."=".$day))->first();
+
+
+        return view('reader/index', ['edition' => $edition]);
     }
 }

@@ -113,28 +113,3 @@ ul.navbar-nav.ml-auto li:nth-child(3)
 {
     border-right: 1px solid #e8e8e8;
 }
-
-
-/* Loader CSS3 */
-i.loader.processing::before {
-  content: 'processando';
-  -webkit-animation: processing 2s infinite; /* Safari 4.0 - 8.0 */
-  animation: processing 2s infinite;
-}
-
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes processing {
-  0% {content: 'processando .';}
-  25% {content: 'processando ..';}
-  50% {content: 'processando ...';}
-  75% {content: 'processando ....';}
-  100% {content: 'processando .....';}
-}
-
-@keyframes processing {
-  0% {content: 'processando .';}
-  25% {content: 'processando ..';}
-  50% {content: 'processando ...';}
-  75% {content: 'processando ....';}
-  100% {content: 'processando .....';}
-}
