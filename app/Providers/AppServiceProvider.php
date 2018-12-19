@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Faker\Generator as FakerGenerator;
 use Faker\Factory as FakerFactory;
+use DB;
+use Log;
 class AppServiceProvider extends ServiceProvider
 {
   /**
@@ -16,6 +18,14 @@ class AppServiceProvider extends ServiceProvider
   public function boot()
   {
     Schema::defaultStringLength(191);
+
+    DB::listen(function($query) {
+        Log::info(
+            $query->sql,
+            $query->bindings,
+            $query->time
+        );
+    });
   }
 
   /**

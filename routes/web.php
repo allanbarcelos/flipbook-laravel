@@ -13,7 +13,10 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/{year}/{mont}/{day}', 'HomeController@index')->name('home_edition');
+Route::get('/{year?}/{month?}/{day?}', 'HomeController@index')->name('home_edition')
+                                                              ->where('year', '[0-9]{4}')
+                                                              ->where('month', '[1-9]|1[0,1,2]')
+                                                              ->where('month', '[1-9]|0[1-9]|[1,2][0-9]|3[0,1]');
 
 Route::get('/user', 'UserController@index')->name('user');
 Route::get('/user/edit', 'UserController@edit')->name('user_edit');

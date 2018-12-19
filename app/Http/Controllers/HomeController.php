@@ -24,17 +24,21 @@ class HomeController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function index(Request $request)
+    public function index(Request $request, $year = null, $month = null, $day = null)
     {
+
         $request->user()->authorizeRoles(['administrator','client']);
 
         $monthEditions = Content::whereNotNull('first_page')->whereMonth('edition_date', Carbon::now()->month)->get();
 
+        if($year !== null && $month !== null && $day !== null)
+            $lastEdition = Content::whereDate('edition_date','=', date($year . "-" . $month . "-" . $day))->whereNotNull('first_page')->first();
+        else
+            $lastEdition = Content::whereNotNull('first_page')->orderBy('edition_date', 'desc')->first();
 
-
-        $lastEdition = Content::whereNotNull('first_page')->orderBy('edition_date', 'desc')->first();
 
         $edition_date = explode("-", $lastEdition->edition_date->format('Y-m-d') );
+
         $edition_date = [
             "year" => $edition_date[0],
             "month" => $edition_date[1],
