@@ -65,14 +65,14 @@ class FirstPagePdfToJpeg implements ShouldQueue
       $img->resize(400, null, function ($constraint) {
         $constraint->aspectRatio();
       });
-      $img->encode('jpg');
+      $img->encode('jpeg');
       $img->save($jpeg_file_path, 85);
 
       $img = Image::make($png_file_path);
       $img->resize(180, null, function ($constraint) {
         $constraint->aspectRatio();
       });
-      $img->encode('jpg');
+      $img->encode('jpeg');
       $img->save($jpeg_file_thumbnail_path, 85);
 
       break;
@@ -84,7 +84,6 @@ class FirstPagePdfToJpeg implements ShouldQueue
       Storage::disk('s3')->put($pdf_file, fopen($pdf_file_path, 'r+'), 'public');
       Storage::disk('s3')->put($jpeg_file, fopen($jpeg_file_path, 'r+'), 'public');
       Storage::disk('s3')->put($jpeg_file_thumbnail, fopen($jpeg_file_thumbnail_path, 'r+'), 'public');
-
 
     }
     catch(S3 $e)
@@ -111,7 +110,7 @@ class FirstPagePdfToJpeg implements ShouldQueue
       [
         $jpeg_file_path,
         $pdf_file_path,
-        $s3_thumbnail
+        $jpeg_file_thumbnail_path
       ]
     );
   }
