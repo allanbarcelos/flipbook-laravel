@@ -50,5 +50,5 @@ deploy:
     secure: "${SECRET_ACCESS_KEY}"
   region: us-east-2
   app: FlipBook
-  env: flipbook-dev-env
+  env: flipbook
   bucket_name: ${BUCKET_NAME}
