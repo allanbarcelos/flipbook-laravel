@@ -34,7 +34,7 @@ $(function(){
       $.notifyDefaults({
         type: 'danger',
         allow_dismiss: true,
-        delay: 1000
+        delay: 5000
       });
       $.notify("Não selecione mais que <strong>3</strong> para exclusão");
     }
