@@ -3,7 +3,7 @@
 @section('content')
 
 
-@if($lastEdition)
+@if(isset($lastEdition))
 <div class="row">
 
     <div class="col-md-7">
