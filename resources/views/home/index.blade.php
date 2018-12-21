@@ -2,6 +2,8 @@
 
 @section('content')
 
+
+@if($lastEdition)
 <div class="row">
 
     <div class="col-md-7">
@@ -59,6 +61,17 @@
         <div class="row">&nbsp;</div>
     </div>
 </div>
+@else
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <h2>Nenhuma edição publicada ainda</h2>
+  </div>
+</div>
+@endif
+
+
+
+
 @endsection
 
 
