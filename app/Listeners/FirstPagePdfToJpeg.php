@@ -42,13 +42,13 @@ class FirstPagePdfToJpeg implements ShouldQueue
     $pdf_file = $event->file;
     $pdf_file_path = storage_path($pdf_file);
 
-    $jpeg_file = pathinfo($pdf_file_path, PATHINFO_FILENAME) . '_' . '1' . '.' . 'jpeg';
+    $jpeg_file = pathinfo($pdf_file_path, PATHINFO_FILENAME) . '_' . '.' . 'jpeg';
     $jpeg_file_path = storage_path($jpeg_file);
 
-    $jpeg_file_thumbnail = pathinfo($pdf_file_path, PATHINFO_FILENAME) . '_' . 'thumbnail_' . '1' . '.' . 'jpeg';
+    $jpeg_file_thumbnail = pathinfo($pdf_file_path, PATHINFO_FILENAME) . '_' . 'thumbnail' . '.' . 'jpeg';
     $jpeg_file_thumbnail_path = storage_path($jpeg_file_thumbnail);
 
-    $png_file = pathinfo($pdf_file_path, PATHINFO_FILENAME) . '_' . '1' . '.' . 'png';
+    $png_file = pathinfo($pdf_file_path, PATHINFO_FILENAME) . '.' . 'png';
     $png_file_path = storage_path($png_file);
 
     try
