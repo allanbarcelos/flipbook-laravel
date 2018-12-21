@@ -10,6 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use App\Content;
+use Log;
 
 class ContentCreated
 {
@@ -27,7 +28,7 @@ class ContentCreated
 
       $this->content = $content;
       $this->file = $file;
-
+      \Log::info('Event ContentCreated lauched!');
     }
 
     /**

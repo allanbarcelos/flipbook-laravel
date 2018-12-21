@@ -15,6 +15,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 use App\Content;
 
+use Log;
 class FirstPagePdfToJpeg implements ShouldQueue
 {
   /**
@@ -35,6 +36,8 @@ class FirstPagePdfToJpeg implements ShouldQueue
   */
   public function handle(ContentCreated $event)
   {
+
+    \Log::info('Listener FirstPagePdfToJpeg executed!');
 
     $pdf_file = $event->file;
     $pdf_file_path = storage_path($pdf_file);
@@ -59,6 +62,8 @@ class FirstPagePdfToJpeg implements ShouldQueue
 
     foreach ($imagick as $page)
     {
+      \Log::info('Imagick process ... ');
+
       $page->writeimage($png_file_path);
 
       $img = Image::make($png_file_path);
@@ -75,6 +80,8 @@ class FirstPagePdfToJpeg implements ShouldQueue
       $img->encode('jpeg');
       $img->save($jpeg_file_thumbnail_path, 85);
 
+      \Log::info('Imagick process ended... ');
+
       break;
     }
 
@@ -82,8 +89,11 @@ class FirstPagePdfToJpeg implements ShouldQueue
     {
 
       Storage::disk('s3')->put($pdf_file, fopen($pdf_file_path, 'r+'), 'public');
+      \Log::info('Success pdf_file_path: ' . $pdf_file_path);
       Storage::disk('s3')->put($jpeg_file, fopen($jpeg_file_path, 'r+'), 'public');
+      \Log::info('Success jpeg_file: ' . $jpeg_file);
       Storage::disk('s3')->put($jpeg_file_thumbnail, fopen($jpeg_file_thumbnail_path, 'r+'), 'public');
+      \Log::info('Success jpeg_file_thumbnail: ' . $jpeg_file_thumbnail);
 
     }
     catch(S3 $e)
