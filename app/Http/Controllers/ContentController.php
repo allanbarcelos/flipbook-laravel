@@ -83,10 +83,10 @@ class ContentController extends Controller
       }
 
       $contents = Content::join('content_file','content.id', '=', 'content_file.content_id')
-      ->where($where)
-      ->whereBetween('contents.created_at',$whereBetween)
-      ->select('contents.id','contents.title')
-      ->paginate(10);
+                          ->where($where)
+                          ->whereBetween('contents.created_at',$whereBetween)
+                          ->select('contents.id','contents.title')
+                          ->paginate(10);
 
       return view('content.list', compact('contents'));
     }
@@ -127,7 +127,7 @@ class ContentController extends Controller
             $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
             $pdf_file = md5($filename . time()) . '_' . time() . '.' . 'pdf';
 
-            if($request->file('pdf_file')->storeAs( '.', $pdf_file, 'root' ))
+            if($request->file('pdf_file')->storeAs( 'tmp', $pdf_file, 'root' ))
             {
 
               Event::fire(new ContentCreated($content, $pdf_file));

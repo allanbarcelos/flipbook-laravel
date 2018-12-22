@@ -20,12 +20,23 @@
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false">
-            <span>{{ \Carbon\Carbon::now()->format('F') }} {{ \Carbon\Carbon::now()->format('Y') }}</span>
+
+            <span>{{\Carbon\Carbon::now()->format('F Y') }}</span>
             <i class="fa fa-chevron-down"></i>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-            <a class="dropdown-item" href="#">{{ \Carbon\Carbon::now()->format('F') }} {{ \Carbon\Carbon::now()->format('Y') }}</a>
+              @foreach($months as $value)
+                <a class="dropdown-item" href="{{
+                    route(
+                    'home_edition',
+                    [
+                        \Carbon\Carbon::createFromFormat('F Y', $value)->format('Y'),
+                        \Carbon\Carbon::createFromFormat('F Y', $value)->format('m')
+                    ]
+                    )
+                }}">{{ $value }}</a>
+              @endforeach
 
           </div>
         </div>

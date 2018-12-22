@@ -40,16 +40,16 @@ class FirstPagePdfToJpeg implements ShouldQueue
     \Log::info('Listener FirstPagePdfToJpeg executed!');
 
     $pdf_file = $event->file;
-    $pdf_file_path = storage_path($pdf_file);
+    $pdf_file_path = storage_path('tmp/' . $pdf_file);
 
     $jpeg_file = pathinfo($pdf_file_path, PATHINFO_FILENAME) . '_' . '.' . 'jpeg';
-    $jpeg_file_path = storage_path($jpeg_file);
+    $jpeg_file_path = storage_path('tmp/' . $jpeg_file);
 
     $jpeg_file_thumbnail = pathinfo($pdf_file_path, PATHINFO_FILENAME) . '_' . 'thumbnail' . '.' . 'jpeg';
-    $jpeg_file_thumbnail_path = storage_path($jpeg_file_thumbnail);
+    $jpeg_file_thumbnail_path = storage_path('tmp/' . $jpeg_file_thumbnail);
 
     $png_file = pathinfo($pdf_file_path, PATHINFO_FILENAME) . '.' . 'png';
-    $png_file_path = storage_path($png_file);
+    $png_file_path = storage_path('tmp/' . $png_file);
 
     try
     {

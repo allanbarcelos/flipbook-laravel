@@ -1,3 +1,14 @@
+img.lazy {
+       width: 400px;
+       height: 566px;
+       display: block;
+   }
+
+   img.prev.lazy {
+          width: 180px;
+          height: 255px;
+          display: block;
+      }
 .danger {
   background: #e3342f;
   color: #fff;
