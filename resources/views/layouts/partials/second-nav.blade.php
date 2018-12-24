@@ -25,7 +25,7 @@
             <i class="fa fa-chevron-down"></i>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
+              @if(isset($months))
               @foreach($months as $value)
                 <a class="dropdown-item" href="{{
                     route(
@@ -37,6 +37,7 @@
                     )
                 }}">{{ $value }}</a>
               @endforeach
+              @endif
 
           </div>
         </div>

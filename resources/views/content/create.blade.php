@@ -14,7 +14,6 @@
     </ul>
 </div>
 
-
 @if(session()->has('message'))
 <div class="alert alert-success">
     {{ session()->get('message') }}
@@ -144,20 +143,18 @@ $('.custom-file-input').on('change',function(){
     var loaderProcessing = $("#processing");
 
     $('form').ajaxForm({
-        url: "{{ route('content_create')}}",
+        url: "{{route('content_create')}}",
         type: 'post',
         beforeSend: function() {
-
             var percentVal = '0%';
             progress.removeClass('invisible');
+
             bar.width(percentVal);
             bar.html(percentVal);
             bar.css("width", percentVal);
-
         },
 
         uploadProgress: function(event, position, total, percentComplete) {
-
             var percentVal = percentComplete + '%';
             bar.width(percentVal);
             bar.html(percentVal);
@@ -210,7 +207,7 @@ $('.custom-file-input').on('change',function(){
             }
 
         },
-        complete: function() {
+        complete: function(xhr) {
 
             loaderProcessing.addClass("invisible");
             $('form')[0].reset();

@@ -18,6 +18,7 @@ class CreateAddressUserTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('cep');
             $table->string('logradouro');
+            $table->integer('numero');
             $table->string('bairro');
             $table->string('cidade');
             $table->string('complemento');

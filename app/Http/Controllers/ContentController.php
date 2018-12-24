@@ -158,7 +158,7 @@ class ContentController extends Controller
 
     public function checkProcessing()
     {
-      return Content::whereNull('full_file')->whereNull('first_page')->get(['id']);
+      return Content::where('status','=','processando')->get(['id']);
     }
 
   }

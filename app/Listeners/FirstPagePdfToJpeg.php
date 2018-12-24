@@ -112,7 +112,8 @@ class FirstPagePdfToJpeg implements ShouldQueue
       [
         'full_file' => $s3_pdf_file,
         'first_page' => $s3_first_page,
-        'thumbnail' => $s3_thumbnail
+        'thumbnail' => $s3_thumbnail,
+        'status' => 'publicado'
       ]
     );
 

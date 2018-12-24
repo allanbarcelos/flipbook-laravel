@@ -20,6 +20,7 @@ class CreateContentTable extends Migration
             $table->string('full_file')->nullable();
             $table->string('first_page')->nullable();
             $table->string('thumbnail')->nullable();
+            $table->enum('status',['processando','publicado'])->default('processando');
 
             $table->timestamps();
         });
