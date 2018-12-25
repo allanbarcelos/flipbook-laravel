@@ -87,7 +87,7 @@
                         <hr     />
                         <p><strong>CPF : </strong>118.463.866-75</p>
                         <p><strong>Email : </strong>admin@mail.com</p>
-                        <p><strong>Senha : </strong>admi123456</p>
+                        <p><strong>Senha : </strong>admin123456</p>
                     </div>
                 </div>
                 <div class="col-md-6">
