@@ -5,8 +5,6 @@
 
 <div class="row">
   <div class="col-md-6">
-    <form class="" action="" method="post">
-
       {!! Form::open() !!}
       @csrf
 
@@ -120,8 +118,34 @@
 
 
       {!! Form::close() !!}
+  </div>
+  <div class="col-md-6">
+    <form class="form" action="{{route('user_change_password')}}" method="post">
 
+
+    @csrf
+
+    <div class="form-group row">
+      <label class="col-md-2 control-label"  for="oldPassword">Senha antiga</label>
+      <div class="col-md-4">
+        <input type="password" class="form-control input-md" id="oldPassword" name="oldPassword">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-2 control-label"  for="newPassword">Nova senha</label>
+      <div class="col-md-4">
+        <input type="password" class="form-control input-md" id="newPassword" name="newPassword">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-2 control-label"  for="rptNewPassword">Repita a senha</label>
+      <div class="col-md-4">
+        <input type="password" class="form-control input-md" id="rptNewPassword" name="rptNewPassword">
+      </div>
+    </div>
     </form>
   </div>
-  <div class="col-md-6">&nbsp;</div>
+</div>
 @endsection

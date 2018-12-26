@@ -19,8 +19,8 @@ Route::get('/{year?}/{month?}/{day?}', 'HomeController@index')->name('home_editi
                                                               ->where('day', '[1-9]|0[1-9]|[1,2][0-9]|3[0,1]');
 
 Route::get('/user', 'UserController@index')->name('user');
-Route::get('/user/edit', 'UserController@edit')->name('user_edit');
-Route::get('/user/change-password', 'UserController@changePassword')->name('user_change_password');
+Route::post('/user/edit', 'UserController@edit')->name('user_edit');
+Route::post('/user/change-password', 'UserController@changePassword')->name('user_change_password');
 
 Route::get('/admin', null)->name('admin');
 
