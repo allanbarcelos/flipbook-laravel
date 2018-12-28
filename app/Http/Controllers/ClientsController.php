@@ -101,11 +101,35 @@ class ClientsController extends Controller
       return view('clients.index', compact('users'));
     }
 
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
-      $client = User::findOrFail($id);
-      //  dd($client);
-      return view('clients.form', ['client' => $client]);
+        $request->user()->authorizeRoles(['administrator']);
+
+        $user = User::where('users.id', $id)
+                    ->join('cpf_user', 'users.id', '=', 'cpf_user.user_id')
+
+                    ->join('phone_user as mobileMap','users.id','=','mobileMap.user_id')
+                    ->join('phones as cell', function ($join) {
+                      $join->where('cell.type', '=', 'cellphone');
+                    })
+
+                    ->join('phone_user as homeMap','users.id','=','homeMap.user_id')
+                    ->join('phones as home', function ($join) {
+                      $join->where('home.type', '=', 'landline');
+                    })
+
+                    ->join('address_user as address','users.id','=','address.user_id')
+
+                    ->select('users.*',
+                             'cpf_user.cpf as cpf',
+                             'cell.phone as cellphone',
+                             'home.phone as landline'
+                    )->get();
+
+        foreach ($user as $key => $value)
+        {
+          return view('users/edit')->with('user',$value);
+        }
     }
 
     public function create(Request $request)

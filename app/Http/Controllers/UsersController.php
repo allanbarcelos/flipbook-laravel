@@ -126,6 +126,7 @@ class UsersController extends Controller
       {
         return view('users/edit')->with('user',$value);
       }
+
     }
 
     public function create(Request $request)

@@ -1,7 +1,7 @@
 extends('layouts.app')
 
 @section('content')
-{{ Breadcrumbs::render('clientsCreate') }}
+{{ Breadcrumbs::render('client_edit') }}
 <div class="page-header">
    <h3>Adicionar novo cliente</h3>
 </div>

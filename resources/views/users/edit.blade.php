@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-{{ Breadcrumbs::render('user_create') }}
+{{ Breadcrumbs::render('user_edit', $user->id) }}
 
 <div class="page-header">
   <h3>Adicionar novo usuário</h3>
@@ -28,7 +28,7 @@
     <div class="form-group row">
       <label class="col-md-1 control-label"  for="name">Nome</label>
       <div class="col-md-6">
-        <input type="text" class="form-control input-md" id="name" name="name" value="{{ old('name') }}" placeholder="">
+        <input type="text" class="form-control input-md" id="name" name="name" value="{{ (null !== old('name'))? old('name'): $user->name }}" placeholder="">
       </div>
       <small class="text-muted"></small>
     </div>
@@ -36,7 +36,7 @@
     <div class="form-group row">
       <label class="col-md-1 control-label"  for="email">Email</label>
       <div class="col-md-6">
-        <input type="email" class="form-control input-md" id="email" value="{{ old('email') }}" name="email" placeholder="">
+        <input type="email" class="form-control input-md" id="email" value="{{ (null !== old('email'))? old('email'): $user->email }}" name="email" placeholder="">
       </div>
       <small class="text-muted"></small>
     </div>
@@ -59,7 +59,7 @@
         <button type="submit" class="btn btn-primary float-right">Adicionar</button>
       </div>
     </div>
-    
+
     {!! Form::close() !!}
   </div>
 </div>

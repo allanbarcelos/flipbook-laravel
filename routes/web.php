@@ -29,7 +29,7 @@ Route::get('/admin/users/search', 'UsersController@search');
 Route::any('/admin/user/create', 'UsersController@create')->name('user_create');
 
 Route::get('/admin/user/view', 'UsersController@view')->name('user_view');
-Route::get('/admin/user/edit', 'UsersController@edit')->name('user_edit');
+Route::get('/admin/user/edit/{id?}', 'UsersController@edit')->name('user_edit');
 Route::post('/admin/users/delete', 'UsersController@delete')->name('users_delete');
 
 Route::any('/admin/clients', 'ClientsController@index')->name('clients');
@@ -40,7 +40,7 @@ Route::post('/admin/clients/delete', 'ClientsController@delete')->name('clients_
 Route::get('/admin/client', null)->name('client');
 Route::any('/admin/client/create', 'ClientsController@create')->name('client_create');
 Route::get('/admin/client/view', 'ClientsController@view')->name('client_view');
-Route::get('/admin/client/edit', 'ClientsController@edit')->name('client_edit');
+Route::get('/admin/client/edit/{id}', 'ClientsController@edit')->name('client_edit');
 
 Route::any('/admin/content', 'ContentController@index')->name('content');
 Route::any('/admin/content/create', 'ContentController@create')->name('content_create');

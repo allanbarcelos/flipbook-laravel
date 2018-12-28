@@ -29,9 +29,9 @@ Breadcrumbs::for('client_create', function ($trail) {
 });
 
 // Home > Admin > Clients > Edit
-Breadcrumbs::for('client_edit', function ($trail) {
+Breadcrumbs::for('client_edit', function ($trail, $name) {
     $trail->parent('clients');
-    $trail->push('Edit', route('client_edit'));
+    $trail->push('Edit', route('client_edit', $name));
 });
 
 
@@ -54,9 +54,9 @@ Breadcrumbs::for('user_create', function ($trail) {
 });
 
 // Home > Admin > Users > Edit
-Breadcrumbs::for('user_edit', function ($trail) {
+Breadcrumbs::for('user_edit', function ($trail, $id) {
     $trail->parent('users');
-    $trail->push('Edit', route('user_edit'));
+    $trail->push('Edit', route('user_edit', $id));
 });
 
 // Home > Admin > Content
